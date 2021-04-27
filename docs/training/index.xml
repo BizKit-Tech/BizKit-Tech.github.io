@@ -1,1 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Training on</title><link>/docs/training/</link><description>Recent content in Training on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 06 Oct 2020 08:48:45 +0000</lastBuildDate><atom:link href="/docs/training/index.xml" rel="self" type="application/rss+xml"/></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Training on</title><link>/docs/training/</link><description>Recent content in Training on</description><generator>Hugo -- gohugo.io</generator><language>en-US</language><lastBuildDate>Tue, 06 Oct 2020 08:48:45 +0000</lastBuildDate><atom:link href="/docs/training/index.xml" rel="self" type="application/rss+xml"/><item><title>Bench Commands</title><link>/docs/training/bench-commands/</link><pubDate>Tue, 27 Apr 2021 15:28:50 +0800</pubDate><guid>/docs/training/bench-commands/</guid><description>General Usage bench --version - Show bench version
+bench version - Show version of all apps
+bench src - Show bench repo directory
+bench --help - Show all commands and help
+bench [command] --help - Show help for command
+bench init [bench-name] - Create a new bench (Run from home dir)
+--python TEXT Path to Python Executable. --ignore-exist Ignore if Bench instance exists.</description></item></channel></rss>
