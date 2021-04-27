@@ -14,7 +14,7 @@ toc: true
 ---
 
 ## Prerequisites
-- Site is setup in production mode.
+- Site is set up in [production mode]({{< relref "set-up-instance#converting-to-production" >}}).
 - The site has a registered custom domain.
 - DNS multitenancy must be setup.
 
