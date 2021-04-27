@@ -19,8 +19,6 @@ toc: true
 
 Create new content for your site:
 
-{{< btn-copy text="npm run create" >}}
-
 ```bash
 npm run create [path] [flags]
 ```

@@ -21,6 +21,26 @@ hljs.registerLanguage("python", python);
 
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll("pre code").forEach((block) => {
+    // Automatically add copy button
+    // <div class="doks-clipboard">
+    //   <button class="btn-clipboard btn btn-link" data-clipboard-text="{{ .Get "text" | safeHTML }}"><span class="copy-status"></span></button>
+    // </div>
+
+    const copyStatus = document.createElement("span");
+    copyStatus.className = "copy-status";
+
+    const copyButton = document.createElement("button");
+    copyButton.className = "btn-clipboard btn btn-link";
+    copyButton.setAttribute("data-clipboard-text", block.textContent);
+    copyButton.appendChild(copyStatus);
+
+    const copyWrapper = document.createElement("div");
+    copyWrapper.className = "doks-clipboard";
+    copyWrapper.appendChild(copyButton);
+
+    const pre = block.parentNode;
+    pre.parentNode.insertBefore(copyWrapper, pre);
+
     hljs.highlightBlock(block);
   });
 });
