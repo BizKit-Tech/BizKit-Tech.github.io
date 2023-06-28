@@ -351,7 +351,7 @@ x == 1
 x<1
 ```
 
-Never use spaces around = when passing keyword arguments or defining a default parameter value.
+Never use spaces around `=` when passing keyword arguments or defining a default parameter value.
 
 <span style="color: green;">YES:</span>
 
