@@ -1,0 +1,359 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-700.woff2 type=font/woff2 crossorigin><link rel=stylesheet href=/main.a442a0cf382807d097de1ea4b52759003505e4a3dd13e853e07a4c156a5de01579665ce2534662ac1b30038aa6d777e804d359bffe7484982cd020b77ab4a32d.css integrity="sha512-pEKgzzgoB9CX3h6ktSdZADUF5KPdE+hT4HpMFWpd4BV5ZlziU0ZirBswA4qm13foBNNZv/50hJgs0CC3erSjLQ==" crossorigin=anonymous><noscript><style>img.lazyload{display:none}</style></noscript><meta name=robots content="index, follow"><meta name=googlebot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><meta name=bingbot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><title>Coding Standards - Home</title><meta name=description content="Know more about our coding standards at BizKit."><link rel=canonical href=/docs/standards/coding-standards/><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/bizkit.jpg"><meta name=twitter:title content="Coding Standards"><meta name=twitter:description content="Know more about our coding standards at BizKit."><meta name=twitter:site content="@"><meta name=twitter:creator content="@"><meta property="og:title" content="Coding Standards"><meta property="og:description" content="Know more about our coding standards at BizKit."><meta property="og:type" content="article"><meta property="og:url" content="/docs/standards/coding-standards/"><meta property="og:image" content="/bizkit.jpg"><meta property="article:published_time" content="2023-06-21T14:30:18+08:00"><meta property="article:modified_time" content="2023-06-21T14:30:18+08:00"><meta property="og:site_name" content="Home"><meta property="article:publisher" content="https://www.facebook.com/BizKitTechnologies"><meta property="article:author" content="https://www.facebook.com/BizKitTechnologies"><meta property="og:locale" content="en_US"><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"\/docs\/standards\/coding-standards\/"},"headline":"Coding Standards","image":[],"datePublished":"2023-06-21T14:30:18CET","dateModified":"2023-06-21T14:30:18CET","author":{"@type":"Organization","name":"Home"},"publisher":{"@type":"Organization","name":"Home","logo":{"@type":"ImageObject","url":"\/bizkit.png"}},"description":"Know more about our coding standards at BizKit."}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"\/"},{"@type":"ListItem","position":2,"name":"Docsstandardscoding Standards","item":"\/docsstandardscoding-standards\/"}]}</script><meta name=theme-color content="#fff"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest></head><body class="docs single"><div class="header-bar fixed-top"></div><header class="navbar fixed-top navbar-expand-md navbar-light"><div class=container><input class="menu-btn order-0" type=checkbox id=menu-btn>
+<label class="menu-icon d-md-none" for=menu-btn><span class=navicon></span></label><a class="navbar-brand order-1 order-md-0 me-auto" href=/>Home</a>
+<button id=mode class="btn btn-link order-2 order-md-4" type=button aria-label="Toggle mode">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button><ul class="navbar-nav social-nav order-3 order-md-5"><li class=nav-item><a class=nav-link href=https://github.com/BizKit-Tech/BizKit-Tech.github.io><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg><span class="ms-2 visually-hidden">GitHub</span></a></li></ul><div class="collapse navbar-collapse order-4 order-md-1"><ul class="navbar-nav main-nav me-auto order-5 order-md-2"><li class="nav-item active"><a class=nav-link href=/docs/start-here/introduction/>Docs</a></li></ul><div class="break order-6 d-md-none"></div><form class="navbar-form flex-grow-1 order-7 order-md-3"><input id=userinput class="form-control is-search" type=search placeholder="Search docs..." aria-label="Search docs..." autocomplete=off><div id=suggestions class="shadow bg-white rounded"></div></form></div></div></header><div class="wrap container" role=document><div class=content><div class="row flex-xl-nowrap"><div class="col-lg-5 col-xl-4 docs-sidebar"><nav class=docs-links aria-label="Main navigation"><ul class="list-unstyled collapsible-sidebar"><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#start-here aria-expanded=true>
+Start Here</button><div class=collapse id=start-here><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/start-here/introduction/>Introduction</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#training aria-expanded=false>
+Training</button><div class=collapse id=training><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/training/bench-commands/>Bench Commands</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#setup aria-expanded=false>
+Setup</button><div class=collapse id=setup><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/setup/set-up-instance/>Set Up an Instance</a></li><li><a class="link-dark rounded" href=/docs/setup/add-custom-domain/>Add Custom Domain</a></li><li><a class="link-dark rounded" href=/docs/setup/set-up-dns-multitenancy/>Set Up DNS Multitenancy</a></li><li><a class="link-dark rounded" href=/docs/setup/set-up-https/>Set Up HTTPS</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#projects aria-expanded=false>
+Projects</button></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#standards aria-expanded=false>
+Standards</button><div class="collapse show" id=standards><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/standards/code-review-guidelines/>Code Review Guidelines</a></li><li><a class="link-dark rounded active" href=/docs/standards/coding-standards/>Coding Standards</a></li><li><a class="link-dark rounded" href=/docs/standards/commit-standards/>Commit Standards</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#others aria-expanded=false>
+Others</button></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#help aria-expanded=false>
+Help</button><div class=collapse id=help><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/help/commands/>Commands</a></li><li><a class="link-dark rounded" href=/docs/help/how-to-update/>How to Update</a></li><li><a class="link-dark rounded" href=/docs/help/troubleshooting/>Troubleshooting</a></li><li><a class="link-dark rounded" href=/docs/help/faq/>FAQ</a></li></ul></div></li></ul></nav></div><nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#11-formatters>1.1 Formatters</a><ul><li><a href=#111-python-formatter>1.1.1 Python Formatter</a></li><li><a href=#112-javascript-formatter>1.1.2 JavaScript Formatter</a></li></ul></li><li><a href=#12-linters>1.2 Linters</a><ul><li><a href=#121-python-linter>1.2.1 Python Linter</a></li></ul></li></ul><ul><li><a href=#21-imports>2.1 Imports</a></li><li><a href=#22-exceptions>2.2 Exceptions</a></li><li><a href=#23-truefalse-evaluations>2.3 True/False Evaluations</a></li></ul><ul><li><a href=#31-semicolons>3.1 Semicolons</a></li><li><a href=#32-line-length>3.2 Line Length</a></li><li><a href=#33-parentheses>3.3 Parentheses</a></li><li><a href=#34-indentation>3.4 Indentation</a></li><li><a href=#35-imports-formatting>3.5 Imports Formatting</a></li><li><a href=#36-naming-conventions>3.6 Naming Conventions</a></li><li><a href=#37-strings>3.7 Strings</a></li><li><a href=#38-whitespace>3.8 Whitespace</a></li><li><a href=#39-comments-and-docstrings>3.9 Comments and Docstrings</a><ul><li><a href=#391-docstrings>3.9.1 Docstrings</a></li><li><a href=#392-modules>3.9.2 Modules</a></li><li><a href=#393-functions-and-methods>3.9.3 Functions and Methods</a></li><li><a href=#394-classes>3.9.4 Classes</a></li><li><a href=#395-block-and-inline-comments>3.9.5 Block and Inline Comments</a></li></ul></li></ul><ul><li><a href=#41-equality-checks>4.1 Equality Checks</a></li><li><a href=#42-truefalse-evaluations>4.2 True/False Evaluations</a></li><li><a href=#43-functions>4.3 Functions</a></li><li><a href=#44-arrow-functions>4.4 Arrow Functions</a></li></ul><ul><li><a href=#51-semicolons>5.1 Semicolons</a></li><li><a href=#52-references>5.2 References</a></li><li><a href=#53-objects>5.3 Objects</a></li><li><a href=#54-arrays>5.4 Arrays</a></li><li><a href=#55-destructuring>5.5 Destructuring</a></li><li><a href=#56-strings>5.6 Strings</a></li><li><a href=#57-naming-conventions>5.7 Naming Conventions</a></li><li><a href=#58-jquery>5.8 jQuery</a></li><li><a href=#59-indentation>5.9 Indentation</a></li><li><a href=#510-blocks>5.10 Blocks</a></li></ul><ul><li><a href=#61-keyword-formatting>6.1 Keyword Formatting</a></li><li><a href=#62-condition-formatting>6.2 Condition Formatting</a></li><li><a href=#63-alias-naming-conventions>6.3 Alias Naming Conventions</a></li></ul></nav></div></nav><main class="docs-content col-lg-11 col-xl-9"><nav aria-label=breadcrumb><ol class=breadcrumb><li class=breadcrumb-item><a href=/>Home</a></li><li class=breadcrumb-item><a href=/docs/>Docs</a></li><li class=breadcrumb-item><a href=/docs/standards/>Standards</a></li><li class="breadcrumb-item active" aria-current=page>Coding Standards</li></ol></nav><h1>Coding Standards</h1><p class=lead>Originally by: Kevin Chan</p><h1 id=1-background>1 Background</h1><p>When multiple developers work together on a single repository, code consistency can often suffer. This is why it is important to define coding standards to ensure the consistency and maintainability of the codebase across different teams and developers.</p><h2 id=11-formatters>1.1 Formatters<a href=#11-formatters class=anchor aria-hidden=true>#</a></h2><p>Formatters make it easier to keep code consistent. They can automatically format code to follow a set of standards or settings.</p><h3 id=111-python-formatter>1.1.1 Python Formatter<a href=#111-python-formatter class=anchor aria-hidden=true>#</a></h3><p>For Python, we use the <a href=https://pypi.org/project/black/>black</a> formatter. The reason for this is that <code>black</code> is uncompromising and will keep everything consistent without need for any other config or settings files.</p><p>To install <code>black</code>, run:</p><pre><code class=language-bash>pip install black
+</code></pre><p>Once done, you can call:</p><pre><code class=language-bash>black &lt;source_file_or_directory&gt;
+</code></pre><p>and <code>black</code> will take care of everything.</p><p>You may also configure <code>black</code> to automatically run after every save in the Visual Studio Code editor. To do so, make sure you have the <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a> installed and then enable <strong>Editor: Format on Save</strong> and set the <strong>Python > Formatting: Provider</strong> to <code>black</code>.</p><h3 id=112-javascript-formatter>1.1.2 JavaScript Formatter<a href=#112-javascript-formatter class=anchor aria-hidden=true>#</a></h3><p>For JavaScript, we use the <a href=https://prettier.io/>prettier</a> formatter with the following configurations:</p><pre><code class=language-json>{
+  &quot;arrowParens&quot;: &quot;always&quot;,
+  &quot;bracketSpacing&quot;: true,
+  &quot;trailingComma&quot;: &quot;es5&quot;,
+  &quot;tabWidth&quot;: 4,
+  &quot;semi&quot;: true,
+  &quot;singleQuote&quot;: false
+}
+</code></pre><p>If you are using the Visual Studio Code editor, then the easiest way to configure and use <code>prettier</code> is to install <a href="https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode">this extension</a> and set the above configurations from the editor’s settings page.</p><p>You may also copy and paste this code into your Visual Studio Code settings file:</p><pre><code class=language-json>&quot;prettier.arrowParens&quot;: &quot;always&quot;,
+&quot;prettier.bracketSpacing&quot;: true,
+&quot;prettier.trailingComma&quot;: &quot;es5&quot;,
+&quot;prettier.tabWidth&quot;: 4,
+&quot;prettier.semi&quot;:true,
+&quot;prettier.singleQuote&quot;: false
+</code></pre><p>Otherwise, you may install <code>prettier</code> on a per project basis using the following command:</p><pre><code class=language-bash>npm install --save-dev --save-exact prettier
+</code></pre><p>Then create a <code>.prettierrc.json</code> config file with the above configurations.</p><p>With that done, you can format a file by running:</p><pre><code class=language-bash>npx prettier --write &lt;source_file_or_directory&gt;
+</code></pre><h2 id=12-linters>1.2 Linters<a href=#12-linters class=anchor aria-hidden=true>#</a></h2><p>While a linter is no longer absolutely necessary once formatters are used, they can still catch some possible styling improvements that aren’t always caught by formatters.</p><h3 id=121-python-linter>1.2.1 Python Linter<a href=#121-python-linter class=anchor aria-hidden=true>#</a></h3><p>For Python, we use a combination of the <a href=https://flake8.pycqa.org/en/latest/>flake8</a> and <a href=http://mypy-lang.org/>mypy</a> linters.</p><p>To install them, run:</p><pre><code class=language-bash>pip install flake8 mypy flake8-mypy
+</code></pre><p>Linters are best used in conjunction with a code editor so to enable them on the Visual Studio Code editor, make sure you have the <a href="https://marketplace.visualstudio.com/items?itemName=ms-python.python">Python extension</a> installed and then have the following settings enabled:</p><ul><li>Python > Linting: Enabled</li><li>Python > Linting: Flake8 Enabled</li><li>Python > Linting: Mypy Enabled</li><li>Python > Linting: Lint On Save</li></ul><h1 id=2-python-language-rules>2 Python Language Rules</h1><h2 id=21-imports>2.1 Imports<a href=#21-imports class=anchor aria-hidden=true>#</a></h2><p>Prefer importing packages and modules over individual classes and functions. This makes it easier to compartmentalize external classes and functions into their respective packages.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>import package.module
+from package import module
+</code></pre><p><span style=color:red>NO:</span>:</p><pre><code class=language-python>from package.module import (
+    classA, classB, functionC, constantD, functionE
+)
+</code></pre><p>NEVER use <code>*</code> (wildcard) imports.</p><p>Also avoid function-level imports.</p><p>For modules or packages with long names, use the as statement to shorten it and make the code more readable. For example:</p><pre><code class=language-python>import longername as ln
+import module.with.a.really.long.name as mwarln
+</code></pre><h2 id=22-exceptions>2.2 Exceptions<a href=#22-exceptions class=anchor aria-hidden=true>#</a></h2><p>Never use catch-all <code>except:</code> statements, or catch <code>Exception</code> or <code>StandardError</code>. Python is very tolerant when using this and we may end up missing certain scenarios that we don’t want to be caught like incorrect variable names or <code>Ctrl+C</code> interrupts.</p><p>Minimize the amount of code in a <code>try</code>/<code>except</code> block. The larger the body of the <code>try</code>, the more likely that an exception will be raised by a line of code that you didn’t expect to raise an exception. In those cases, the <code>try</code>/<code>except</code> block hides a real error.</p><p>Use the <code>finally</code> clause to execute code whether or not an exception is raised in the <code>try</code> block. This is often useful for cleanup, i.e., closing a file.</p><h2 id=23-truefalse-evaluations>2.3 True/False Evaluations<a href=#23-truefalse-evaluations class=anchor aria-hidden=true>#</a></h2><p>Use the “implicit” false if at all possible (e.g., <code>if foo:</code> rather than <code>if len(foo):</code>). They’re easier to read and less error-prone.</p><p>Always use <code>if foo is None:</code> (or <code>is not None</code>) to check for a <code>None</code> value. This is especially important, when testing whether a variable or argument that defaults to <code>None</code> was set to some other value. The other value might be a value that’s false in a boolean context.</p><p>Never compare a boolean variable to <code>False</code> using <code>==</code>. Use <code>if not x:</code> instead. If you need to distinguish <code>False</code> from <code>None</code> then chain the expressions, such as <code>if not x and x is not None:</code>.</p><p>For sequences (strings, lists, tuples), use the fact that empty sequences are false, so <code>if seq:</code> and <code>if not seq:</code> are preferable to <code>if len(seq):</code> and <code>if not len(seq):</code> respectively.</p><p>Note that when handling integers, implicit false may involve more risk than benefit (i.e., accidentally handling <code>None</code> as 0). In these cases, it is okay to compare a value which is known to be an integer (and is not the result of <code>len()</code>) against the integer 0. Also note that <code>"0"</code> (i.e., <code>0</code> as string) evaluates to true.</p><h1 id=3-python-style-rules>3 Python Style Rules</h1><h2 id=31-semicolons>3.1 Semicolons<a href=#31-semicolons class=anchor aria-hidden=true>#</a></h2><p><strong>NEVER.</strong> Don’t even think about it.</p><h2 id=32-line-length>3.2 Line Length<a href=#32-line-length class=anchor aria-hidden=true>#</a></h2><p>Maximum line length is <em>80 characters</em>.</p><p>Explicit exceptions to the 80 character limit:</p><ul><li>Long import statements.</li><li>URLs, pathnames, or long flags in comments.</li><li>Long string module level constants not containing whitespace that would be inconvenient to split across lines such as URLs or pathnames.</li></ul><p>Avoid using backslash line continuation.</p><h2 id=33-parentheses>3.3 Parentheses<a href=#33-parentheses class=anchor aria-hidden=true>#</a></h2><p>Use parentheses sparingly.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>if foo:
+    bar()
+
+if not foo:
+    bar()
+
+while foo:
+    bar()
+
+if x and y:
+    bar()
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>if (foo):
+    bar()
+
+if not(foo):
+    bar()
+
+while (foo):
+    bar()
+
+if (x and y):
+    bar()
+
+</code></pre><h2 id=34-indentation>3.4 Indentation<a href=#34-indentation class=anchor aria-hidden=true>#</a></h2><p>Indent your code blocks with <em>4 spaces</em>. Never use tabs or mix tabs and spaces.</p><h2 id=35-imports-formatting>3.5 Imports Formatting<a href=#35-imports-formatting class=anchor aria-hidden=true>#</a></h2><p>Imports should be on separate lines. As much as possible, put them at the top of the file, just after any module comments and docstrings and before module globals and constants. Imports should be grouped from most generic to least generic or in the following order:</p><ul><li>Standard library imports</li><li>Related third party imports</li><li>Local application/library specific imports</li></ul><p>Always put a blank line between each group of imports.</p><pre><code class=language-python>import collections
+import queue
+import sys
+
+from absl import app
+from absl import flags
+import bs4
+import cryptography
+import tensorflow as tf
+
+from book.genres import scifi
+from myproject.backend import huxley
+from myproject.backend.hgwells import time_machine
+from myproject.backend.state_machine import main_loop
+from otherproject.ai import body
+from otherproject.ai import mind
+from otherproject.ai import soul
+</code></pre><h2 id=36-naming-conventions>3.6 Naming Conventions<a href=#36-naming-conventions class=anchor aria-hidden=true>#</a></h2><table><thead><tr><th>Type</th><th>Public</th><th>Internal*</th></tr></thead><tbody><tr><td>Packages</td><td>lower_with_under</td><td></td></tr><tr><td>Modules</td><td>lower_with_under</td><td>_lower_with_under</td></tr><tr><td>Classes</td><td>PascalCase</td><td>_PascalCase</td></tr><tr><td>Exceptions</td><td>PascalCase</td><td></td></tr><tr><td>Functions</td><td>lower_with_under()</td><td>_lower_with_under()</td></tr><tr><td>Global/Class Constants</td><td>CAPS_WITH_UNDER</td><td>_CAPS_WITH_UNDER</td></tr><tr><td>Global/Class Variables</td><td>lower_with_under</td><td>_lower_with_under</td></tr><tr><td>Instance Variables</td><td>lower_with_under</td><td>_lower_with_under</td></tr><tr><td>Method Names</td><td>lower_with_under()</td><td>_lower_with_under()</td></tr><tr><td>Function/Method Parameters</td><td>lower_with_under</td><td></td></tr><tr><td>Local Variables</td><td>lower_with_under</td><td></td></tr></tbody></table><p><em>*Note: Internal means internal to a module, or protected or private within a class and should not be accessible outside of it.</em></p><h2 id=37-strings>3.7 Strings<a href=#37-strings class=anchor aria-hidden=true>#</a></h2><p>Use double quotes <code>""</code> for strings.</p><p>When a literal string won’t fit on a single line, use parentheses for implicit line joining.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>x = (
+    &quot;This will build a very long long &quot;
+    &quot;long long long long long long string.&quot;
+)
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>x = &quot;This will build a very long long \
+    long long long long long long string.&quot;
+</code></pre><h2 id=38-whitespace>3.8 Whitespace<a href=#38-whitespace class=anchor aria-hidden=true>#</a></h2><p>Follow standard typographic rules for the use of spaces around punctuation.</p><p>No whitespace inside parentheses, brackets or braces.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>spam(ham[1], {eggs: 2}, [])
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>spam( ham[ 1 ], { eggs: 2 }, [ ] )
+</code></pre><p>No whitespace before a comma, semicolon, or colon. Do use whitespace after a comma, semicolon, or colon, except at the end of the line.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>if x == 4:
+    print(x, y)
+    x, y = y, x
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>if x == 4 :
+    print(x , y)
+    x , y = y , x
+</code></pre><p>No whitespace before the open paren/bracket that starts an argument list, indexing or slicing.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>spam(1)
+dict['key'] = list[index]
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>spam (1)
+dict ['key'] = list [index]
+</code></pre><p>Surround binary operators with a single space on either side for assignment (<code>=</code>), comparisons (<code>==</code>, <code>&lt;</code>, <code>></code>, <code>!=</code>, <code>&lt;></code>, <code>&lt;=</code>, <code>>=</code>, <code>in</code>, <code>not in</code>, <code>is</code>, <code>is not</code>), and booleans (<code>and</code>, <code>or</code>, <code>not</code>). Use your better judgment for the insertion of spaces around arithmetic operators (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>//</code>, <code>%</code>, <code>**</code>, <code>@</code>).</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>x == 1
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>x&lt;1
+</code></pre><p>Never use spaces around <code>=</code> when passing keyword arguments or defining a default parameter value.</p><p><span style=color:green>YES:</span></p><pre><code class=language-python>def chewie(han, leia=True):
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-python>def chewie(han, leia = True):
+</code></pre><h2 id=39-comments-and-docstrings>3.9 Comments and Docstrings<a href=#39-comments-and-docstrings class=anchor aria-hidden=true>#</a></h2><h3 id=391-docstrings>3.9.1 Docstrings<a href=#391-docstrings class=anchor aria-hidden=true>#</a></h3><p>Python uses docstrings to document code. A docstring is a string that is the first statement in a package, module, class or function. Always use the three double-quote <code>"""</code> format for docstrings. The base format for a docstring includes a summary line (one physical line not exceeding 80 characters) terminated by a period, question mark, or exclamation point. When writing more (encouraged), this must be followed by a blank line, followed by the rest of the docstring starting at the same cursor position as the first quote of the first line.</p><h3 id=392-modules>3.9.2 Modules<a href=#392-modules class=anchor aria-hidden=true>#</a></h3><p>Every file should contain license boilerplate and should start with a docstring describing the contents and usage of the module.</p><pre><code class=language-python>&quot;&quot;&quot;A one line summary of the module or program, terminated by a period.
+
+Leave one blank line.  The rest of this docstring should contain an
+overall description of the module or program.  Optionally, it may also
+contain a brief description of exported classes and functions and/or usage
+examples.
+
+    Typical usage example:
+
+        foo = ClassFoo()
+        bar = foo.FunctionBar()
+&quot;&quot;&quot;
+</code></pre><h3 id=393-functions-and-methods>3.9.3 Functions and Methods<a href=#393-functions-and-methods class=anchor aria-hidden=true>#</a></h3><p>In this section, “function” means a method, function, or generator.</p><p>A function must have a docstring, unless it meets all of the following criteria:</p><ul><li>not externally visible</li><li>very short</li><li>Obvious</li></ul><p>A docstring should give enough information to write a call to the function without reading the function’s code. The docstring should be descriptive-style (<code>"""Fetches rows from a Bigtable."""</code>) rather than imperative-style (<code>"""Fetch rows from a Bigtable."""</code>). A docstring should describe the function’s calling syntax and its semantics, not its implementation. For tricky code, comments alongside the code are more appropriate than using docstrings.</p><p>A method that overrides a method from a base class may have a simple docstring sending the reader to its overridden method’s docstring, such as <code>"""See base class."""</code>. The rationale is that there is no need to repeat in many places documentation that is already present in the base method’s docstring. However, if the overriding method’s behavior is substantially different from the overridden method, or details need to be provided (e.g., documenting additional side effects), a docstring with at least those differences is required on the overriding method.</p><p>Certain aspects of a function should be documented in special sections, listed below. Each section begins with a heading line, which ends with a colon. All sections other than the heading should maintain a hanging indent of two or four spaces (be consistent within a file). These sections can be omitted in cases where the function’s name and signature are informative enough that it can be aptly described using a one-line docstring.</p><p><strong>Args:</strong></p><blockquote><p>List each parameter by name. A description should follow the name, and be separated by a colon followed by either a space or newline. If the description is too long to fit on a single 80-character line, use a hanging indent of 2 or 4 spaces more than the parameter name (be consistent with the rest of the docstrings in the file). The description should include required type(s) if the code does not contain a corresponding type annotation. If a function accepts <code>*foo</code> (variable length argument lists) and/or <code>**bar</code> (arbitrary keyword arguments), they should be listed as <code>*foo</code> and <code>**bar</code>.</p></blockquote><p><strong>Returns: (or Yields: for generators)</strong></p><blockquote><p>Describe the type and semantics of the return value. If the function only returns <code>None</code>, this section is not required. It may also be omitted if the docstring starts with Returns or Yields (e.g. <code>"""Returns row from Bigtable as a tuple of strings."""</code>) and the opening sentence is sufficient to describe return value.</p></blockquote><p><strong>Raises:</strong></p><blockquote><p>List all exceptions that are relevant to the interface followed by a description. Use a similar exception name + colon + space or newline and hanging indent style as described in <em>Args:</em>. You should not document exceptions that get raised if the API specified in the docstring is violated (because this would paradoxically make behavior under violation of the API part of the API).</p></blockquote><pre><code class=language-python>def foo(a, b, c=True):
+    &quot;&quot;&quot;Gives a sample docstring for a sample function.
+
+    This is where I provide a more concise description of the
+    function if necessary.
+
+    Args:
+        a: A list of strings.
+        b: The second parameter.
+        require_all_keys: Optional; If this is True, it'll do
+            something weird.
+
+    Returns:
+        A dict mapping keys to the corresponding stuff that was
+        fetched. Each row is represented as a tuple of strings. For
+        example:
+
+        {b'Serak': ('Rigel VII', 'Preparer'),
+         b'Zim': ('Irk', 'Invader'),
+         b'Lrrr': ('Omicron Persei 8', 'Emperor')}
+
+        Returned keys are always bytes.  If a key from the keys
+        argument is missing from the dictionary, then that row was
+        not found in the table (and c must have been False).
+
+    Raises:
+        IOError: An error occurred accessing the data.
+    &quot;&quot;&quot;
+</code></pre><h3 id=394-classes>3.9.4 Classes<a href=#394-classes class=anchor aria-hidden=true>#</a></h3><p>Classes should have a docstring below the class definition describing the class. If your class has public attributes, they should be documented here in an Attributes section and follow the same formatting as a <a href=/docs/standards/coding-standards/#393-functions-and-methods>function’s Args</a> section.</p><pre><code class=language-python>class SampleClass:
+    &quot;&quot;&quot;Summary of class here.
+
+    Longer class information....
+    Longer class information....
+
+    Attributes:
+        likes_spam: A boolean indicating if we like SPAM or not.
+        eggs: An integer count of the eggs we have laid.
+    &quot;&quot;&quot;
+
+    def __init__(self, likes_spam=False):
+        &quot;&quot;&quot;Inits SampleClass with blah.&quot;&quot;&quot;
+        self.likes_spam = likes_spam
+        self.eggs = 0
+
+    def public_method(self):
+        &quot;&quot;&quot;Performs operation blah.&quot;&quot;&quot;
+</code></pre><h3 id=395-block-and-inline-comments>3.9.5 Block and Inline Comments<a href=#395-block-and-inline-comments class=anchor aria-hidden=true>#</a></h3><p>The final place to have comments is in tricky parts of the code. If you’re going to have to explain it at the next <a href=/docs/standards/code-review-guidelines/>code review</a>, you should comment it now. But never describe the code. Assume the person reading the code knows Python (though not what you’re trying to do) better than you do.</p><p>For complicated operations, add a few lines of comments before the operations commence.</p><p>Use inline comments sparingly for non-obvious operations. Inline comments should start at least 2 spaces away from the code with the comment character <code>#</code>, followed by at least one space before the text of the comment itself.</p><pre><code class=language-python># We use a weighted dictionary search to find out where i is in
+# the array.  We extrapolate position based on the largest num
+# in the array and the array size and then do binary search to
+# get the exact number.
+
+if i &amp; (i-1) == 0:  # True if i is 0 or a power of 2.
+</code></pre><h1 id=4-javascript-language-rules>4 JavaScript Language Rules</h1><h2 id=41-equality-checks>4.1 Equality Checks<a href=#41-equality-checks class=anchor aria-hidden=true>#</a></h2><p>When comparing, use <code>===</code> and <code>!==</code> over =<code>=</code> and <code>!=</code>. JavaScript is a dynamic language so using <code>==</code> might give unexpected results due to it allowing the type to be different.</p><h2 id=42-truefalse-evaluations>4.2 True/False Evaluations<a href=#42-truefalse-evaluations class=anchor aria-hidden=true>#</a></h2><p>Use shortcuts for booleans, but explicit comparisons for strings and numbers.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>if (isValid) {
+  bar();
+}
+
+if (name !== &quot;&quot;) {
+  bar();
+}
+
+if (myArray.length &gt; 0) {
+  bar();
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>if (isValid === true) {
+  bar();
+}
+
+if (name) {
+  bar();
+}
+
+if (myArray) {
+  bar();
+}
+
+if (myArray.length) {
+  bar();
+}
+</code></pre><h2 id=43-functions>4.3 Functions<a href=#43-functions class=anchor aria-hidden=true>#</a></h2><p>Use default parameter syntax over mutating function arguments.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>function foo(opts = {}) {
+  bar();
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>function foo(opts) {
+  if (opts === undefined) {
+    opts = {};
+  }
+}
+</code></pre><p>Always put default parameters last.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>function foo(name, opts = {}) {
+  bar();
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>function foo(opts = {}, name) {
+  bar();
+}
+</code></pre><p>Never reassign parameters. If you need a default value, then use default parameters instead.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>function foo(a) {
+  const b = a || 1;
+}
+
+function foo(a = 1) {
+  bar();
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>function foo(a) {
+  a = 1;
+}
+
+function foo(a) {
+  if (a === undefined) {
+    a = 1;
+  }
+}
+</code></pre><h2 id=44-arrow-functions>4.4 Arrow Functions<a href=#44-arrow-functions class=anchor aria-hidden=true>#</a></h2><p>Use arrow functions whenever possible. They are more concise, anonymous, and change the way <code>this</code> binds in functions and removes the need for those ugly <code>const me = this;</code> assignments.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>setInterval(() =&gt; {
+  this.foo();
+}, 5000);
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const me = this;
+setInterval(function () {
+  me.foo();
+}, 5000);
+</code></pre><h1 id=5-javascript-style-rules>5 JavaScript Style Rules</h1><h2 id=51-semicolons>5.1 Semicolons<a href=#51-semicolons class=anchor aria-hidden=true>#</a></h2><p>Use semicolons. While JavaScript has this thing called Automatic Semicolon Insertion (ASI), it can sometimes lead to unexpected results.</p><h2 id=52-references>5.2 References<a href=#52-references class=anchor aria-hidden=true>#</a></h2><p>Avoid using <code>var</code> like the plague. Use <code>const</code> as much as possible because it ensures that we can’t reassign references so it’s easier to track errors. If we need to reassign or update values, then use <code>let</code>.</p><p>The reason why we want to use <code>const</code> and <code>let</code> as much as possible over <code>var</code> is because they are block-scoped. They will only exist in the blocks they are defined in and won’t lead to those hard-to-figure-out scoping issues.</p><h2 id=53-objects>5.3 Objects<a href=#53-objects class=anchor aria-hidden=true>#</a></h2><p>Use the literal syntax for object creation.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>const item = {};
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const item = new Object();
+</code></pre><p>Use object method shorthand.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>frappe.ui.form.on(&quot;Item&quot;, {
+  item_code(frm) {},
+});
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>frappe.ui.form.on(&quot;Item&quot;, {
+  item_code: function (frm) {},
+});
+</code></pre><h2 id=54-arrays>5.4 Arrays<a href=#54-arrays class=anchor aria-hidden=true>#</a></h2><p>Use the literal syntax for array creation.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>const items = [];
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const items = new Array();
+</code></pre><p>Use array spreads <code>...</code> to copy arrays.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>const itemsCopy = [...items];
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const itemsCopy = [];
+
+for (let i = 0; i &lt; items.length; i += 1) {
+  itemsCopy[i] = items[i];
+}
+</code></pre><h2 id=55-destructuring>5.5 Destructuring<a href=#55-destructuring class=anchor aria-hidden=true>#</a></h2><p>Use array/object destructuring assignments.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>const arr = [1, 2, 3, 4];
+const [first, second] = arr;
+
+const obj = { a: 1, b: 2, c: 3 };
+const { a, b } = obj;
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const arr = [1, 2, 3, 4];
+const first = arr[0];
+const second = arr[1];
+
+const obj = { a: 1, b: 2, c: 3 };
+const a = obj[&quot;a&quot;];
+const b = obj[&quot;b&quot;];
+</code></pre><h2 id=56-strings>5.6 Strings<a href=#56-strings class=anchor aria-hidden=true>#</a></h2><p>Use double quotes <code>""</code> for strings.</p><p>When programmatically building up strings, consider using template strings instead of concatenation.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>const greeting = `How are you, ${name}?`;
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const greeting = &quot;How are you, &quot; + name + &quot;?&quot;;
+</code></pre><h2 id=57-naming-conventions>5.7 Naming Conventions<a href=#57-naming-conventions class=anchor aria-hidden=true>#</a></h2><table><thead><tr><th>Type</th><th>Case</th></tr></thead><tbody><tr><td>Classes</td><td>PascalCase</td></tr><tr><td>Exceptions</td><td>PascalCase</td></tr><tr><td>Functions</td><td>lower_with_under()</td></tr><tr><td>Global/Class Constants</td><td>CAPS_WITH_UNDER</td></tr><tr><td>Global/Class Variables</td><td>lower_with_under</td></tr><tr><td>Instance Variables</td><td>lower_with_under</td></tr><tr><td>Method Names</td><td>lower_with_under()</td></tr><tr><td>Function/Method Parameters</td><td>lower_with_under</td></tr><tr><td>Local Variables</td><td>lower_with_under</td></tr></tbody></table><h2 id=58-jquery>5.8 jQuery<a href=#58-jquery class=anchor aria-hidden=true>#</a></h2><p>Prefix jQuery object variables with a <code>$</code>.</p><p><span style=color:green>YES:</span></p><pre><code class=language-js>const $sidebar = $(&quot;.sidebar&quot;);
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-js>const sidebar = $(&quot;.sidebar&quot;);
+</code></pre><h2 id=59-indentation>5.9 Indentation<a href=#59-indentation class=anchor aria-hidden=true>#</a></h2><p>Indent your code blocks with <em>4 spaces</em>. Never use tabs or mix tabs and spaces.</p><h2 id=510-blocks>5.10 Blocks<a href=#510-blocks class=anchor aria-hidden=true>#</a></h2><p>Use braces with all multi-line blocks. The opening brace should always be on the same line as the condition, loop, or function declaration. The closing brace should be on a separate line.</p><p><span style=color:green>YES:</span></p><pre><code>if (test) return false;
+
+if (test) {
+    return false;
+}
+
+function bar() {
+    return false;
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code>if (test)
+    return false;
+
+function foo() { return false; }
+</code></pre><p>If you’re using multi-line blocks with <code>if</code> and <code>else</code>, put <code>else</code> on the same line as your <code>if</code> block’s closing brace.</p><p><span style=color:green>YES:</span></p><pre><code>if (test) {
+    thing1();
+    thing2();
+} else {
+    thing3();
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code>if (test) {
+    thing1();
+    thing2();
+}
+else {
+    thing3();
+}
+</code></pre><p>If an if block always executes a return statement, the subsequent else block is unnecessary. A return in an else if block following an if block that contains a return can be separated into multiple if blocks.</p><p><span style=color:green>YES:</span></p><pre><code>function foo() {
+    if (x) {
+        return x;
+    }
+
+    return y;
+}
+
+function cats() {
+    if (x) {
+        return x;
+    }
+
+    if (y) {
+        return y;
+    }
+}
+
+function dogs(x) {
+    if (x) {
+        if (z) {
+            return y;
+        }
+    } else {
+        return z;
+    }
+}
+</code></pre><p><span style=color:red>NO:</span></p><pre><code>function foo() {
+    if (x) {
+        return x;
+    } else {
+        return y;
+    }
+}
+
+function cats() {
+    if (x) {
+        return x;
+    } else if (y) {
+        return y;
+    }
+}
+
+function dogs(x) {
+    if (x) {
+        return x;
+    } else {
+        if (y) {
+            return y;
+        }
+    }
+}
+</code></pre><h1 id=6-sql-style-rules>6 SQL Style Rules</h1><h2 id=61-keyword-formatting>6.1 Keyword Formatting<a href=#61-keyword-formatting class=anchor aria-hidden=true>#</a></h2><p>Use lowercase letters for ALL keywords. Place keywords and arguments in separate lines.</p><p><span style=color:green>YES:</span></p><pre><code class=language-sql>select
+    item_code,
+    item_group
+from
+    `tabItem`
+where
+    disabled = 0;
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-sql>SELECT item_code, item_group
+FROM `tabItem`
+WHERE disabled = 0;
+</code></pre><h2 id=62-condition-formatting>6.2 Condition Formatting<a href=#62-condition-formatting class=anchor aria-hidden=true>#</a></h2><p>Separate each and/ or condition into their own line and place the keyword before the condition.</p><p><span style=color:green>YES:</span></p><pre><code class=language-sql>select
+    item_code,
+    item_group
+from
+    `tabItem`
+where
+    disabled = 0
+    and is_stock_item = 1
+    or is_fixed_asset = 1;
+</code></pre><p><span style=color:red>NO:</span></p><pre><code class=language-sql>SELECT item_code, item_group
+FROM `tabItem`
+WHERE disabled = 0 AND is_stock_item = 1 OR
+    is_fixed_asset = 1;
+</code></pre><h2 id=63-alias-naming-conventions>6.3 Alias Naming Conventions<a href=#63-alias-naming-conventions class=anchor aria-hidden=true>#</a></h2><p>Format aliases as <code>t_&lt;DocType abbreviation></code>. For example:</p><table><thead><tr><th>DocType Name</th><th>Table Name</th><th>Alias Name</th></tr></thead><tbody><tr><td>Item</td><td>tabItem</td><td>t_i</td></tr><tr><td>Item Price</td><td>tabItem Price</td><td>t_ip</td></tr><tr><td>Purchase Order</td><td>tabPurchase Order</td><td>t_po</td></tr><tr><td>Purchase Order Item</td><td>tabPurchase Order Item</td><td>t_poi</td></tr></tbody></table><h1 id=7-final-reminders>7 Final Reminders</h1><p>Please note that these standards are still open to improvements. Just because it’s on a document doesn’t mean it’s perfect. So if you, the reader, have any feedback or comments that you think will improve the overall standards, please don’t hesitate to let us know.</p><div class=my-n3></div></main></div></div></div><footer class="footer text-muted"><div class=container><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://github.com/>GitHub</a>, <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a></li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.2374eee79bc19379a4404a900e042aef91675978a6686beeb97b3b0fa80af5c349abc1304de36298d942cde796148b853299ff49801257ee2b89e89ac427d75b.js integrity="sha512-I3Tu55vBk3mkQEqQDgQq75FnWXimaGvuuXs7D6gK9cNJq8EwTeNimNlCzeeWFIuFMpn/SYASV+4rieiaxCfXWw==" crossorigin=anonymous defer></script><script src=/js/highlight.min.06bc575474b7870a192cb49dce8845ac4471f5e504357081665555fe252a37837b72cca0f58157a9615ff384d3e439e26f58c94416a4b744c27b3056adfad1aa.js integrity="sha512-BrxXVHS3hwoZLLSdzohFrERx9eUENXCBZlVV/iUqN4N7csyg9YFXqWFf84TT5Dnib1jJRBakt0TCezBWrfrRqg==" crossorigin=anonymous defer></script><script src=/main.min.7ab523108435955765bcb88a0ee704f412ba01646b5478e84f3b9feb24f0ce750a14c3f7bd9a62408fe21e41996d361a9eb29f77e85dfe77b7e17f7623bd3a97.js integrity="sha512-erUjEIQ1lVdlvLiKDucE9BK6AWRrVHjoTzuf6yTwznUKFMP3vZpiQI/iHkGZbTYanrKfd+hd/ne34X92I706lw==" crossorigin=anonymous defer></script><script src=/index.min.21761341b97ef71bb47bfc8d15aa8f6e030a7d6b91d657dfc6b32e6e73359c3a3db6b61fe5c4ce8b3a137413aca5f1d622b4da5830242d0ef62d57a03c043fe7.js integrity="sha512-IXYTQbl+9xu0e/yNFaqPbgMKfWuR1lffxrMubnM1nDo9trYf5cTOizoTdBOspfHWIrTaWDAkLQ72LVegPAQ/5w==" crossorigin=anonymous defer></script></body></html>
