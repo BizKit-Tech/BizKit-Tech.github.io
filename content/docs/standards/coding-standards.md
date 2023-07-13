@@ -1,7 +1,7 @@
 ---
 title: "Coding Standards"
 description: "Know more about our coding standards at BizKit."
-lead: "Originally by: Kevin Chan"
+lead: "Author/s: Kevin Chan"
 date: 2023-06-21T14:30:18+08:00
 lastmod: 2023-06-21T14:30:18+08:00
 draft: false

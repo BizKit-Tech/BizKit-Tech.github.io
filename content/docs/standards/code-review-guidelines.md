@@ -1,7 +1,7 @@
 ---
 title: "Code Review Guidelines"
 description: "Know more about our code review guidelines when reviewing pull requests."
-lead: "Originally by: Kevin Chan"
+lead: "Author/s: Kevin Chan, Celyn Raquel"
 date: 2023-06-21T14:30:18+08:00
 lastmod: 2023-06-21T14:30:18+08:00
 draft: false
