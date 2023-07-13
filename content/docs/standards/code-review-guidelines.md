@@ -70,7 +70,7 @@ Make sure to tag your reviewers and provide a link to your pull requests in the 
 8. Once issues have been resolved, requests have been implemented, or pending questions have been answered, the author notifies the reviewer to recheck their code.
 9. Repeat steps 5 - 8 until the reviewers are satisfied with the changes.
 10. The reviewers approve the pull request, squash merge the pull request, and then delete the feature branch.
-11. There are two (2) ways to close the Discord PR thread: (1) manually renaming the thread `open` ---> `closed`, and (2) using the Thread ID as an argument to our `/close` slash command on Discord (Note: You have to be in Discord's Developer Mode to be able to copy the Thread ID).
+11. There are two (2) ways to close the Discord PR thread: (1) manually renaming the thread `open` ---> `closed`, and (2) calling the `/close` command within the thread itself.
 
 ## 1.6 Affected Projects and Repositories
 
