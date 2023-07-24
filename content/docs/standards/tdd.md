@@ -8,7 +8,7 @@ draft: false
 images: []
 menu:
   docs:
-    parent: "projects"
+    parent: "standards"
 weight: 302
 toc: true
 ---
@@ -22,7 +22,7 @@ toc: true
 There are several key features of test-driven development that are important for beginners to understand:
 
 1. The idea that tests are written before the code itself is written. This ensures that the code is written to satisfy the requirements of the tests, rather than the other way around.
-2. The use of automated testing tools to run the tests and check the results. This allows for efficient and repeatable testing, and ensures that the tests are always run in the same way.
+2. The use of automated testing tools to run the tests and check the results. This allows for efficient and repeatable testing, and ensures that the tests always run in the same way.
 3. The practice of writing tests for each piece of functionality that is added to the code. This helps to ensure that the code is written in a modular and testable way, and allows for efficient debugging if something goes wrong.
 4. The concept of test-driven development as a feedback loop. The tests are used to check the code and provide feedback on its behavior, which can then be used to improve the code and make it more reliable.
 
@@ -507,7 +507,7 @@ def add(a, b):
   return a + b
 ```
 
-In this example, the red, green, refactor approach is used to write a simple function called `add` that can be used to add two numbers together and return the result. The test is written first, and then the code is written to make the test pass. Finally, the code is refactored to improve its readability and maintainability.
+In this example, the red, green, refactor approach is used to write a simple function called `add` that can be used to add two numbers together and return the result. The test is written first, and then the code is written to make the test pass. The code is then refactored to improve its readability and maintainability. After refactoring, more tests are added and/or the existing tests are updated to handle more scenarios.
 
 ### 5.2.2 Basic Rules
 
@@ -519,6 +519,7 @@ There are several basic rules that you should follow when writing unit tests in 
 4. Test cases should be repeatable. This means that the same test should produce the same results every time it is run, regardless of the environment or other factors.
 5. Test cases should be thorough. This means that they should cover all relevant scenarios and test for all possible outcomes.
 6. Test cases should be easy to read and understand. This means that they should be well-structured and use clear, descriptive names for variables and methods.
+7. Test code is still code. It should follow the same standards as production code (e.g., DRY, KISS principles).
 
 ### 5.2.3 Steps
 
@@ -589,6 +590,7 @@ A few things to remember when writing unit tests:
 6. Refactor your code to improve its design and readability. This will help you make your code more maintainable and easier to understand.
 7. Repeat the process for each new feature or task you want to implement. This will help you build a suite of tests that will give you confidence in the correctness and completeness of your code.
 8. Be persistent and keep practicing. Test-driven development can be challenging at first, but it becomes easier and more natural with time and practice.
+9. To make sure your test data doesn't mess with the real data in your ERPNext instance, run the tests on a separate test site with the necessary apps installed. (Tip: You can check the `run_tests.sh` file under the erpnext repo for the steps taken to run all BizKit-updated tests.)
 
 # 6 Running Unit Tests
 
@@ -597,6 +599,6 @@ This is the _exciting_ part! (lol is it really)
 Follow these steps when running unit tests in your local instance:
 
 1. Run your unit tests individually first (using the `--test` flag).
-2. Once all your unit tests have pass individually, run the whole module/DocType if possible (using the `--doctype` or `--module` flag).
-3. If all tests run pass as well, run all BizKit-updated tests (using the `bench run-bizkit-tests` command). Make sure that your new tests are accounted for in the `updated_doctypes.txt` and/or `updated_modules.txt` file.
-4. If you encounter no error while running all BizKit-updated tests, you're **#MarkedAsSafe**!
+2. Once all your unit tests have passed individually, run the whole module/DocType if possible (using the `--doctype` or `--module` flag).
+3. If all tests pass as well, run all BizKit-updated tests (using the `bench run-bizkit-tests` command). Make sure that your new tests are accounted for in the `updated_doctypes.txt` and/or `updated_modules.txt` file.
+4. If you encounter no errors while running all BizKit-updated tests, you're **#MarkedAsSafe**!
