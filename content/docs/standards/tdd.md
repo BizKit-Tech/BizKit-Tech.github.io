@@ -97,17 +97,16 @@ For required links, these are made positional arguments in the `setup_prerequisi
 class TestItem(unittest.TestCase):
   @staticmethod
     def setup_prerequisites(
-        item_group_name, principal_name=None, do_not_add_customers_suppliers=True, suppliers=[], customers=[], uoms=[]
+        item_group_name, principal_name=None, suppliers=[], customers=[], uoms=[]
     ):
         TestItemGroup.create(item_group_name)
         if principal_name:
             TestPrincipal.create(principal_name)
 
-        if do_not_add_customers_suppliers == 0:
-            for customer in customers:
-                TestCustomer.create(customer_name=customer)
-            for supplier in suppliers:
-                TestSupplier.create(supplier_name=supplier)
+        for customer in customers:
+            TestCustomer.create(customer_name=customer)
+        for supplier in suppliers:
+            TestSupplier.create(supplier_name=supplier)
 
         for uom in uoms:
             TestUOM.create(uom)
@@ -115,11 +114,9 @@ class TestItem(unittest.TestCase):
 
 In the code above, the `item_group_name` parameter is required, while the `principal_name`, `suppliers`, `customers`, and `uoms` parameters have default values that evaluate to a `False` Boolean. Inside the `setup_prerequisites` method, the `create` methods of the linked DocTypes are called based on the arguments passed.
 
-Notice that the `setup_prerequisites` method of the `TestItem` has an additional `do_not_add_customers_suppliers` parameter. This is a parameter that's also present in the `create` method of the `TestItem` (which we'll touch on later). This is an added condition when adding suppliers and customers to their respective child tables in the Item document being created.
-
 ### 5.1.2 create
 
-This method creates an instance of the current DocType. The parameters of `create` methods are the names of link fields and the `do_not_save` parameter:
+This method creates an instance of the current DocType. The parameters of `create` methods are: the names of link fields that are **required** (unless frequently set), and the `do_not_save` parameter:
 
 ```python
 class TestItem(unittest.TestCase):
@@ -130,27 +127,21 @@ class TestItem(unittest.TestCase):
         item_description="_Test Item",
         stock_uom="Piece",
         uoms=[{"uom": "Piece", "conversion_factor": 1}],
-        suppliers=[],
-        customers=[],
-        valuation_rate=100,
-        is_sub_contracted_item=0,
-        do_not_add_customers_suppliers=0,
         do_not_save=0,
     ):
         TestItem.setup_prerequisites(
-            item_group, do_not_add_customers_suppliers, suppliers, customers, [uom["uom"] for uom in uoms]
+            item_group, suppliers, customers, [uom["uom"] for uom in uoms]
         )
 
         if not frappe.db.exists("Item", {"item_name": item_name}):
 
-            if do_not_add_customers_suppliers == 0:
-                supplier_list = frappe.db.get_list(
-                    "Supplier", filters={"name": ["in", suppliers]}, pluck="name"
-                )
+            supplier_list = frappe.db.get_list(
+                "Supplier", filters={"name": ["in", suppliers]}, pluck="name"
+            )
 
-                customer_list = frappe.db.get_list(
-                    "Customer", filters={"name": ["in", customers]}, pluck="name"
-                )
+            customer_list = frappe.db.get_list(
+                "Customer", filters={"name": ["in", customers]}, pluck="name"
+            )
 
             new_item = frappe.new_doc("Item")
             new_item.item_code = item_name
@@ -158,16 +149,9 @@ class TestItem(unittest.TestCase):
             new_item.item_name = item_name
             new_item.item_group = item_group
             new_item.stock_uom = stock_uom
-            new_item.valuation_rate = 100
-
-            for supplier in supplier_list:
-                new_item.append("supplier_items", {"supplier": supplier})
 
             for uom in uoms:
                 new_item.append("uoms", uom)
-
-            for customer in customer_list:
-                new_item.append("customer_items", {"customer": customer})
 
             if not do_not_save:
               new_item.save()
@@ -437,7 +421,7 @@ TestItem.destroy_prerequisites()
 
 ### 5.1.5 destroy_prerequisites
 
-This method deletes the prerequisite documents linked to the current document. It takes similar arguments as the `setup_prerequisites` without the additional ones (e.g., `do_not_add_customers_suppliers`), **all of which are keyword arguments** and have default values that evaluate to `False` (e.g., `None`, `[]`). It deletes the actual documents linked to the current document based on the arguments passed to identify them using their DocTypes' corresponding `destroy` methods.
+This method deletes the prerequisite documents linked to the current document. It takes similar arguments as the `setup_prerequisites`, **all of which are keyword arguments** and have default values that evaluate to `False` (e.g., `None`, `[]`). It deletes the actual documents linked to the current document based on the arguments passed to identify them using their DocTypes' corresponding `destroy` methods.
 
 A few things to note:
 
