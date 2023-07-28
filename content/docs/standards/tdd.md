@@ -566,6 +566,7 @@ A few things to remember when writing unit tests:
 7. Repeat the process for each new feature or task you want to implement. This will help you build a suite of tests that will give you confidence in the correctness and completeness of your code.
 8. Be persistent and keep practicing. Test-driven development can be challenging at first, but it becomes easier and more natural with time and practice.
 9. To make sure your test data doesn't mess with the real data in your ERPNext instance, run the tests on a separate test site with the necessary apps installed. (Tip: You can check the `run_tests.sh` file under the erpnext repo for the steps taken to run all BizKit-updated tests.)
+10. Avoid editing the setup methods without making sure that all updated tests run correctly with your proposed change. Additionally, as much as possible, only include required fields in the parameters in the `create` methods.
 
 # 6 Running Unit Tests
 
