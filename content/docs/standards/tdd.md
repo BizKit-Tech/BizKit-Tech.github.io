@@ -86,10 +86,9 @@ class TestItem(unittest.TestCase):
 This method creates the necessary documents that need to be linked to the current document being created. For example, for an Item document, the following links are present:
 
 - Item Group (required)
-- Principal
 - UOM in the `uoms` table
-- Supplier in the `supplier_items` table
-- Customer in the `customer_items` table
+- Supplier in the `supplier_items` table (optional but frequently set)
+- Customer in the `customer_items` table (optional but frequently set)
 
 For required links, these are made positional arguments in the `setup_prerequisites` method, while those that are not required are made keyword arguments:
 
@@ -97,11 +96,9 @@ For required links, these are made positional arguments in the `setup_prerequisi
 class TestItem(unittest.TestCase):
   @staticmethod
     def setup_prerequisites(
-        item_group_name, principal_name=None, suppliers=[], customers=[], uoms=[]
+        item_group_name, suppliers=[], customers=[], uoms=[]
     ):
         TestItemGroup.create(item_group_name)
-        if principal_name:
-            TestPrincipal.create(principal_name)
 
         for customer in customers:
             TestCustomer.create(customer_name=customer)
@@ -112,7 +109,7 @@ class TestItem(unittest.TestCase):
             TestUOM.create(uom)
 ```
 
-In the code above, the `item_group_name` parameter is required, while the `principal_name`, `suppliers`, `customers`, and `uoms` parameters have default values that evaluate to a `False` Boolean. Inside the `setup_prerequisites` method, the `create` methods of the linked DocTypes are called based on the arguments passed.
+In the code above, the `item_group_name` parameter is required, while the `suppliers`, `customers`, and `uoms` parameters have default values that evaluate to a `False` Boolean. Inside the `setup_prerequisites` method, the `create` methods of the linked DocTypes are called based on the arguments passed.
 
 ### 5.1.2 create
 
@@ -299,8 +296,6 @@ class TestItem(unittest.TestCase):
 
             if destroy_prerequisites:
                 frappe.delete_doc("Item Group", item_doc.item_group)
-                if item_doc.principal:
-                    frappe.delete_doc("Principal", item_doc.principal)
                 if item_doc.supplier_items:
                     for supplier in item_doc.supplier_items:
                         frappe.delete_doc("Supplier", supplier)
@@ -338,8 +333,6 @@ if item:
 
     if destroy_prerequisites:
         frappe.delete_doc("Item Group", item_doc.item_group)
-        if item_doc.principal:
-            frappe.delete_doc("Principal", item_doc.principal)
         if item_doc.supplier_items:
             for supplier in item_doc.supplier_items:
                 frappe.delete_doc("Supplier", supplier)
@@ -425,7 +418,7 @@ This method deletes the prerequisite documents linked to the current document. I
 
 A few things to note:
 
-1. Check first if the field in the current document is required. In the Item DocType, the Item Group is required, while the Principal is not. Hence, the `destroy_prerequisites` method shall check first if a value for the `principal_name` is passed, while the Item Group is deleted in every call.
+1. Check first if the field in the current document is required. In the Item DocType, the Item Group is required, while the Suppliers are not. Hence, the `destroy_prerequisites` method shall check first if a non-empty list for the `suppliers` parameter is passed, while the Item Group is deleted in every call.
 
 2. Use the `destroy` method, and **not** the `destroy_all` method. This is to avoid errors in unit tests involving document deletion and linked fields.
 
@@ -435,11 +428,9 @@ A few things to note:
 class TestItem(unittest.TestCase):
     @staticmethod
     def destroy_prerequisites(
-        item_group_name=None, principal_name=None, suppliers=[], customers=[], uoms=[]
+        item_group_name=None, suppliers=[], customers=[], uoms=[]
     ):
         TestItemGroup.destroy(item_group_name)
-        if principal_name:
-            TestPrincipal.destroy(principal_name)
         for supplier in suppliers:
             TestSupplier.destroy(supplier)
         for customer in customers:
