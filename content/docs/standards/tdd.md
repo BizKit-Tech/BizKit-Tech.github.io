@@ -113,7 +113,7 @@ In the code above, the `item_group_name` parameter is required, while the `suppl
 
 ### 5.1.2 create
 
-This method creates an instance of the current DocType. The parameters of `create` methods are: the names of link fields that are **required** (unless frequently set), and the `do_not_save` parameter:
+This method creates an instance of the current DocType. The parameters of `create` methods are: the names of link fields that are **required**, and the `do_not_save` parameter:
 
 ```python
 class TestItem(unittest.TestCase):
@@ -123,7 +123,6 @@ class TestItem(unittest.TestCase):
         item_group="_Test Item Group",
         item_description="_Test Item",
         stock_uom="Piece",
-        uoms=[{"uom": "Piece", "conversion_factor": 1}],
         do_not_save=0,
     ):
         TestItem.setup_prerequisites(
@@ -131,27 +130,16 @@ class TestItem(unittest.TestCase):
         )
 
         if not frappe.db.exists("Item", {"item_name": item_name}):
-
-            supplier_list = frappe.db.get_list(
-                "Supplier", filters={"name": ["in", suppliers]}, pluck="name"
-            )
-
-            customer_list = frappe.db.get_list(
-                "Customer", filters={"name": ["in", customers]}, pluck="name"
-            )
-
             new_item = frappe.new_doc("Item")
-            new_item.item_code = item_name
-            new_item.item_description = item_description
+            new_item.item_description = item_name
             new_item.item_name = item_name
             new_item.item_group = item_group
             new_item.stock_uom = stock_uom
 
-            for uom in uoms:
-                new_item.append("uoms", uom)
+            new_item.append("uoms", {"uom": stock_uom, "conversion_factor": 1})
 
             if not do_not_save:
-              new_item.save()
+                new_item.save()
 
             return new_item
         else:
