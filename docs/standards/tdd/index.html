@@ -1,0 +1,269 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-700.woff2 type=font/woff2 crossorigin><link rel=stylesheet href=/main.a442a0cf382807d097de1ea4b52759003505e4a3dd13e853e07a4c156a5de01579665ce2534662ac1b30038aa6d777e804d359bffe7484982cd020b77ab4a32d.css integrity="sha512-pEKgzzgoB9CX3h6ktSdZADUF5KPdE+hT4HpMFWpd4BV5ZlziU0ZirBswA4qm13foBNNZv/50hJgs0CC3erSjLQ==" crossorigin=anonymous><noscript><style>img.lazyload{display:none}</style></noscript><meta name=robots content="index, follow"><meta name=googlebot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><meta name=bingbot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><title>Test-Driven Development Guidelines - Home</title><meta name=description content="Know more about our guidelines when writing and running unit tests."><link rel=canonical href=/docs/standards/tdd/><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/bizkit.jpg"><meta name=twitter:title content="Test-Driven Development Guidelines"><meta name=twitter:description content="Know more about our guidelines when writing and running unit tests."><meta name=twitter:site content="@"><meta name=twitter:creator content="@"><meta property="og:title" content="Test-Driven Development Guidelines"><meta property="og:description" content="Know more about our guidelines when writing and running unit tests."><meta property="og:type" content="article"><meta property="og:url" content="/docs/standards/tdd/"><meta property="og:image" content="/bizkit.jpg"><meta property="article:published_time" content="2023-07-05T14:30:18+08:00"><meta property="article:modified_time" content="2023-07-05T14:30:18+08:00"><meta property="og:site_name" content="Home"><meta property="article:publisher" content="https://www.facebook.com/BizKitTechnologies"><meta property="article:author" content="https://www.facebook.com/BizKitTechnologies"><meta property="og:locale" content="en_US"><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"\/docs\/standards\/tdd\/"},"headline":"Test-Driven Development Guidelines","image":[],"datePublished":"2023-07-05T14:30:18CET","dateModified":"2023-07-05T14:30:18CET","author":{"@type":"Organization","name":"Home"},"publisher":{"@type":"Organization","name":"Home","logo":{"@type":"ImageObject","url":"\/bizkit.png"}},"description":"Know more about our guidelines when writing and running unit tests."}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"\/"},{"@type":"ListItem","position":2,"name":"Docsstandardstdd","item":"\/docsstandardstdd\/"}]}</script><meta name=theme-color content="#fff"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest></head><body class="docs single"><div class="header-bar fixed-top"></div><header class="navbar fixed-top navbar-expand-md navbar-light"><div class=container><input class="menu-btn order-0" type=checkbox id=menu-btn>
+<label class="menu-icon d-md-none" for=menu-btn><span class=navicon></span></label><a class="navbar-brand order-1 order-md-0 me-auto" href=/>Home</a>
+<button id=mode class="btn btn-link order-2 order-md-4" type=button aria-label="Toggle mode">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button><ul class="navbar-nav social-nav order-3 order-md-5"><li class=nav-item><a class=nav-link href=https://github.com/BizKit-Tech/BizKit-Tech.github.io><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg><span class="ms-2 visually-hidden">GitHub</span></a></li></ul><div class="collapse navbar-collapse order-4 order-md-1"><ul class="navbar-nav main-nav me-auto order-5 order-md-2"><li class="nav-item active"><a class=nav-link href=/docs/start-here/introduction/>Docs</a></li></ul><div class="break order-6 d-md-none"></div><form class="navbar-form flex-grow-1 order-7 order-md-3"><input id=userinput class="form-control is-search" type=search placeholder="Search docs..." aria-label="Search docs..." autocomplete=off><div id=suggestions class="shadow bg-white rounded"></div></form></div></div></header><div class="wrap container" role=document><div class=content><div class="row flex-xl-nowrap"><div class="col-lg-5 col-xl-4 docs-sidebar"><nav class=docs-links aria-label="Main navigation"><ul class="list-unstyled collapsible-sidebar"><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#start-here aria-expanded=true>
+Start Here</button><div class=collapse id=start-here><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/start-here/introduction/>Introduction</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#training aria-expanded=false>
+Training</button><div class=collapse id=training><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/training/bench-commands/>Bench Commands</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#setup aria-expanded=false>
+Setup</button><div class=collapse id=setup><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/setup/set-up-instance/>Set Up an Instance</a></li><li><a class="link-dark rounded" href=/docs/setup/add-custom-domain/>Add Custom Domain</a></li><li><a class="link-dark rounded" href=/docs/setup/set-up-dns-multitenancy/>Set Up DNS Multitenancy</a></li><li><a class="link-dark rounded" href=/docs/setup/set-up-https/>Set Up HTTPS</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#projects aria-expanded=false>
+Projects</button></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#standards aria-expanded=false>
+Standards</button><div class="collapse show" id=standards><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/standards/code-review-guidelines/>Code Review Guidelines</a></li><li><a class="link-dark rounded" href=/docs/standards/coding-standards/>Coding Standards</a></li><li><a class="link-dark rounded" href=/docs/standards/commit-standards/>Commit Standards</a></li><li><a class="link-dark rounded active" href=/docs/standards/tdd/>Test-Driven Development Guidelines</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#others aria-expanded=false>
+Others</button></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#help aria-expanded=false>
+Help</button><div class=collapse id=help><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/help/commands/>Commands</a></li><li><a class="link-dark rounded" href=/docs/help/how-to-update/>How to Update</a></li><li><a class="link-dark rounded" href=/docs/help/troubleshooting/>Troubleshooting</a></li><li><a class="link-dark rounded" href=/docs/help/faq/>FAQ</a></li></ul></div></li></ul></nav></div><nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#51-creating-and-deleting-documents>5.1 Creating and Deleting Documents</a><ul><li><a href=#511-setup_prerequisites>5.1.1 setup_prerequisites</a></li><li><a href=#512-create>5.1.2 create</a></li><li><a href=#513-destroy>5.1.3 destroy</a></li><li><a href=#514-destroy_all>5.1.4 destroy_all</a></li><li><a href=#515-destroy_prerequisites>5.1.5 destroy_prerequisites</a></li></ul></li><li><a href=#52-unit-tests>5.2 Unit Tests</a><ul><li><a href=#521-red-green-refactor>5.2.1 Red, Green, Refactor</a></li><li><a href=#522-basic-rules>5.2.2 Basic Rules</a></li><li><a href=#523-steps>5.2.3 Steps</a></li><li><a href=#524-additional-reminders-and-tips>5.2.4 Additional Reminders and Tips</a></li></ul></li></ul></nav></div></nav><main class="docs-content col-lg-11 col-xl-9"><nav aria-label=breadcrumb><ol class=breadcrumb><li class=breadcrumb-item><a href=/>Home</a></li><li class=breadcrumb-item><a href=/docs/>Docs</a></li><li class=breadcrumb-item><a href=/docs/standards/>Standards</a></li><li class="breadcrumb-item active" aria-current=page>Test-Driven Development Guidelines</li></ol></nav><h1>Test-Driven Development Guidelines</h1><p class=lead>Author/s: Gab Barbudo, Celyn Raquel</p><h1 id=1-background>1 Background</h1><p><strong>Test-driven development (TDD)</strong> is a software development approach in which tests are written for a piece of code before the code itself is written. The idea is that by writing the tests first, you can define the desired behavior of the code and ensure that it works as expected.</p><h1 id=2-key-features>2 Key Features</h1><p>There are several key features of test-driven development that are important for beginners to understand:</p><ol><li>The idea that tests are written before the code itself is written. This ensures that the code is written to satisfy the requirements of the tests, rather than the other way around.</li><li>The use of automated testing tools to run the tests and check the results. This allows for efficient and repeatable testing, and ensures that the tests always run in the same way.</li><li>The practice of writing tests for each piece of functionality that is added to the code. This helps to ensure that the code is written in a modular and testable way, and allows for efficient debugging if something goes wrong.</li><li>The concept of test-driven development as a feedback loop. The tests are used to check the code and provide feedback on its behavior, which can then be used to improve the code and make it more reliable.</li></ol><h1 id=3-tdd-vs-qas-job>3 TDD vs QA’s Job</h1><p>Unit testing in test-driven development (TDD) and testing done by quality assurance (QA) are two different approaches to testing software. In general, unit testing in TDD is <strong>focused on testing individual units of code</strong>, while testing done by QA is focused on testing the overall functionality and quality of the software.</p><p>Unit testing in TDD is a software development practice in which developers write small, granular tests that test individual units of code before writing the code itself. This helps to ensure that the code is working as expected and helps to catch and prevent bugs from being introduced into the code.</p><p>Testing done by QA, on the other hand, is typically done after the code has been written. QA testers use a variety of techniques and tools to test the overall functionality and quality of the software, including manual testing, automated testing, and performance testing. QA testing is focused on ensuring that the software is working correctly from the user&rsquo;s perspective and meets the requirements and standards set by the development team.</p><p>Overall, TDD and QA testing are complementary approaches to testing that serve different purposes in the software development process. While TDD focuses on writing small, focused tests that are written by the developer, QA testing is often focused on more comprehensive testing of the application as a whole. Both approaches can help to ensure the quality of the code and improve the overall user experience of the application.</p><h1 id=4-setting-up>4 Setting Up</h1><p>There are two files needed to be maintained to track BizKit-updated tests: an <code>updated_doctypes.txt</code> and an <code>updated_modules.txt</code> under the <code>erpnext/erpnext/tests</code> folder. These are where we maintain DocTypes and modules (whose classes are not directly associated to a DocType e.g., <code>TestPurchaseOrderTransactionItemBinUpdater</code>) with our updated tests.</p><p>DocTypes in the <code>updated_doctypes.txt</code> are written like their labels, and are separated by line breaks:</p><pre><code class=language-txt>Item
+Purchase Order
+Purchase Invoice
+</code></pre><p>Modules in the <code>updated_modules.txt</code> are dotted relative paths to the modules, and are separated by line breaks:</p><pre><code class=language-txt>erpnext.transactions.transaction_bin_updater.buying.purchase_order.test_purchase_order_transaction_bin_updater
+erpnext.transactions.transaction_bin_updater.buying.purchase_invoice.test_purchase_invoice_transaction_bin_updater
+</code></pre><h1 id=5-writing-unit-tests>5 Writing Unit Tests</h1><p>There are two things discussed in this section:</p><ol><li>Creating and deleting documents using the designed static methods to be used in unit tests</li><li>Writing the actual unit tests</li></ol><h2 id=51-creating-and-deleting-documents>5.1 Creating and Deleting Documents<a href=#51-creating-and-deleting-documents class=anchor aria-hidden=true>#</a></h2><p>These five static methods should be present in the <code>Test</code> class of a DocType (e.g., <code>TestItem</code>), which is a subclass of the <code>unittest.TestCase</code>:</p><ol><li><code>setup_prerequisites</code></li><li><code>create</code></li><li><code>destroy</code></li><li><code>destroy_all</code></li><li><code>destroy_prerequisites</code></li></ol><p>These are set up as static methods (using the <code>@staticmethod</code> decorator) to eliminate the need to instantiate the whole <code>unittest.TestCase</code> class every time they are called:</p><pre><code class=language-python>class TestItem(unittest.TestCase):
+  @staticmethod
+  def setup_prerequisites():
+    pass
+</code></pre><h3 id=511-setup_prerequisites>5.1.1 setup_prerequisites<a href=#511-setup_prerequisites class=anchor aria-hidden=true>#</a></h3><p>This method creates the necessary documents that need to be linked to the current document being created. For example, for an Item document, the following links are present:</p><ul><li>Item Group (required)</li><li>UOM in the <code>uoms</code> table</li><li>Supplier in the <code>supplier_items</code> table (optional but frequently set)</li><li>Customer in the <code>customer_items</code> table (optional but frequently set)</li></ul><p>For required links, these are made positional arguments in the <code>setup_prerequisites</code> method, while those that are not required are made keyword arguments:</p><pre><code class=language-python>class TestItem(unittest.TestCase):
+  @staticmethod
+    def setup_prerequisites(
+        item_group_name, suppliers=[], customers=[], uoms=[]
+    ):
+        TestItemGroup.create(item_group_name)
+
+        for customer in customers:
+            TestCustomer.create(customer_name=customer)
+        for supplier in suppliers:
+            TestSupplier.create(supplier_name=supplier)
+
+        for uom in uoms:
+            TestUOM.create(uom)
+</code></pre><p>In the code above, the <code>item_group_name</code> parameter is required, while the <code>suppliers</code>, <code>customers</code>, and <code>uoms</code> parameters have default values that evaluate to a <code>False</code> Boolean. Inside the <code>setup_prerequisites</code> method, the <code>create</code> methods of the linked DocTypes are called based on the arguments passed.</p><h3 id=512-create>5.1.2 create<a href=#512-create class=anchor aria-hidden=true>#</a></h3><p>This method creates an instance of the current DocType. The parameters of <code>create</code> methods are: the names of link fields that are <strong>required</strong>, and the <code>do_not_save</code> parameter:</p><pre><code class=language-python>class TestItem(unittest.TestCase):
+    @staticmethod
+    def create(
+        item_name=&quot;_Test Item&quot;,
+        item_group=&quot;_Test Item Group&quot;,
+        item_description=&quot;_Test Item&quot;,
+        stock_uom=&quot;Piece&quot;,
+        do_not_save=0,
+    ):
+        TestItem.setup_prerequisites(
+            item_group, suppliers, customers, [uom[&quot;uom&quot;] for uom in uoms]
+        )
+
+        if not frappe.db.exists(&quot;Item&quot;, {&quot;item_name&quot;: item_name}):
+            new_item = frappe.new_doc(&quot;Item&quot;)
+            new_item.item_description = item_name
+            new_item.item_name = item_name
+            new_item.item_group = item_group
+            new_item.stock_uom = stock_uom
+
+            new_item.append(&quot;uoms&quot;, {&quot;uom&quot;: stock_uom, &quot;conversion_factor&quot;: 1})
+
+            if not do_not_save:
+                new_item.save()
+
+            return new_item
+        else:
+            item_docname = frappe.db.exists(&quot;Item&quot;, {&quot;item_name&quot;: item_name})
+            return frappe.get_doc(&quot;Item&quot;, item_docname)
+</code></pre><p>The design of the <code>create</code> method follows the <a href=https://refactoring.guru/design-patterns/singleton>Singleton pattern</a>, wherein there is only one instance of the object you&rsquo;re looking for. In the code, we specify the <code>item_name</code> and other parameters that make the Item document unique. If that specific Item exists, it returns that existing Item. Otherwise, it creates a new one with the specified attributes and returns it.</p><p>For non-transactions with less fields and links, the parameters are defined in the <code>create</code> method definition, like the one shown above. On the other hand, for transactions (e.g., Purchase Order, Sales Order), since there are too many fields and links in those documents, the parameters in their <code>create</code> methods are compressed into <code>**args</code>. The <code>**</code> is necessary to be able to access the arguments passed like a dictionary.</p><p>Here is an example:</p><pre><code class=language-python>class TestPurchaseOrder(unittest.TestCase):
+    @staticmethod
+    def create(**args):
+        args.setdefault(&quot;item_name&quot;, &quot;_Test Item&quot;)
+        args.setdefault(&quot;company&quot;, &quot;_Test Company&quot;)
+        args.setdefault(&quot;supplier&quot;, &quot;_Test Supplier&quot;)
+        args.setdefault(&quot;set_warehouse&quot;, &quot;_Test Warehouse - _TC&quot;)
+        args.setdefault(&quot;tax_category&quot;, &quot;_Test Tax Category&quot;)
+        args.setdefault(&quot;qty&quot;, 1)
+        args.setdefault(&quot;price_list_rate&quot;, 100)
+        args.setdefault(&quot;rate&quot;, 100)
+
+        TestPurchaseOrder.setup_prerequisites(
+            item_name=args.get(&quot;item_name&quot;),
+            company_name=args.get(&quot;company&quot;),
+            supplier_name=args.get(&quot;supplier&quot;),
+            warehouse_name=args.get(&quot;set_warehouse&quot;).split(&quot; - &quot;)[0],
+            company_abbr=args.get(&quot;set_warehouse&quot;).split(&quot; - &quot;)[1],
+            tax_category_title=args.get(&quot;tax_category&quot;),
+        )
+
+        item = frappe.db.exists(&quot;Item&quot;, {&quot;item_name&quot;: args.get(&quot;item_name&quot;)})
+        item = frappe.get_doc(&quot;Item&quot;, item)
+
+        new_po = frappe.new_doc(&quot;Purchase Order&quot;)
+        new_po.supplier = args.get(&quot;supplier&quot;)
+        new_po.company = args.get(&quot;company&quot;)
+        new_po.transaction_date = date.today()
+        new_po.set_warehouse = args.get(&quot;set_warehouse&quot;)
+        new_po.tax_category = args.get(&quot;tax_category&quot;)
+        new_po.append(
+            &quot;items&quot;,
+            {
+                &quot;item_code&quot;: item.item_code,
+                &quot;item_name&quot;: args.get(&quot;item_name&quot;),
+                &quot;schedule_date&quot;: date.today() + timedelta(days=7),
+                &quot;description&quot;: item.description,
+                &quot;qty&quot;: args.get(&quot;qty&quot;),
+                &quot;stock_uom&quot;: item.stock_uom,
+                &quot;uom&quot;: item.stock_uom,
+                &quot;conversion_factor&quot;: 1,
+                &quot;price_list_rate&quot;: args.get(&quot;price_list_rate&quot;),
+                &quot;rate&quot;: args.get(&quot;rate&quot;),
+                &quot;amount&quot;: args.get(&quot;qty&quot;) * args.get(&quot;rate&quot;),
+            },
+        )
+
+        if not args.get(&quot;do_not_save&quot;):
+            new_po.save()
+            new_po.reload()
+            if not args.get(&quot;do_not_submit&quot;):
+                new_po.submit()
+
+        return new_po
+</code></pre><p>In the code above, the following steps are followed:</p><ol><li>In setting the default values for these parameters, the <code>setdefault</code> method is used on the <code>args</code> dictionary (e.g., <code>args.setdefault("item_name", "_Test Item")</code>):</li></ol><pre><code class=language-python>args.setdefault(&quot;item_name&quot;, &quot;_Test Item&quot;)
+args.setdefault(&quot;company&quot;, &quot;_Test Company&quot;)
+args.setdefault(&quot;supplier&quot;, &quot;_Test Supplier&quot;)
+args.setdefault(&quot;set_warehouse&quot;, &quot;_Test Warehouse - _TC&quot;)
+args.setdefault(&quot;tax_category&quot;, &quot;_Test Tax Category&quot;)
+args.setdefault(&quot;qty&quot;, 1)
+args.setdefault(&quot;price_list_rate&quot;, 100)
+args.setdefault(&quot;rate&quot;, 100)
+</code></pre><ol start=2><li>The <code>setup_prerequisites</code> method of the current class is called, passing the necessary arguments (links in the DocType):</li></ol><pre><code class=language-python>TestPurchaseOrder.setup_prerequisites(
+    item_name=args.get(&quot;item_name&quot;),
+    company_name=args.get(&quot;company&quot;),
+    supplier_name=args.get(&quot;supplier&quot;),
+    warehouse_name=args.get(&quot;set_warehouse&quot;).split(&quot; - &quot;)[0],
+    company_abbr=args.get(&quot;set_warehouse&quot;).split(&quot; - &quot;)[1],
+    tax_category_title=args.get(&quot;tax_category&quot;),
+)
+</code></pre><ol start=3><li>There are times when the linked document is not named based on a specific field (e.g., Item can be named in different ways which can be set in the Stock Settings). To properly pull the item created as a prerequisite, we use the <code>frappe.db.exists</code> method first to get the Item docname then that is passed as an argument to the <code>frappe.get_doc</code> method to get the Item object itself.</li></ol><pre><code class=language-python>item = frappe.db.exists(&quot;Item&quot;, {&quot;item_name&quot;: args.get(&quot;item_name&quot;)})
+item = frappe.get_doc(&quot;Item&quot;, item)
+</code></pre><ol start=4><li>The specific arguments passed are accessed using the <code>args.get()</code> method (e.g., <code>args.get("item_name")</code>):</li></ol><pre><code class=language-python>new_po.supplier = args.get(&quot;supplier&quot;)
+new_po.company = args.get(&quot;company&quot;)
+</code></pre><ol start=5><li>Transactions' <code>create</code> methods have additional <code>do_not_save</code> and <code>do_not_submit</code> parameters, the default values of which evaluate to <code>False</code> (<code>None</code>):</li></ol><pre><code class=language-python>if not args.get(&quot;do_not_save&quot;):
+    new_po.save()
+    new_po.reload()
+    if not args.get(&quot;do_not_submit&quot;):
+        new_po.submit()
+</code></pre><ol start=6><li>The resulting transaction is returned.</li></ol><blockquote><p><strong>Note:</strong> In the <code>create</code> method shown above, we do not check whether or not the Purchase Order exists already. This is because every Purchase Order or transaction cannot be reused.</p></blockquote><h3 id=513-destroy>5.1.3 destroy<a href=#513-destroy class=anchor aria-hidden=true>#</a></h3><p>This method is used to delete the current document and possibly its prerequisites. It takes in the argument that identifies the unique document and the additional <code>destroy_prerequisites</code> argument (which we&rsquo;ll touch on below):</p><pre><code class=language-python>class TestItem(unittest.TestCase):
+    @staticmethod
+    def destroy(item_name, destroy_prerequisites=False):
+        if not item_name:
+            TestItem.destroy_all()
+
+        item = frappe.db.exists(&quot;Item&quot;, {&quot;item_name&quot;: item_name})
+        if item:
+            item_doc = frappe.get_doc(&quot;Item&quot;, item)
+            frappe.delete_doc(&quot;Item&quot;, item)
+
+            if destroy_prerequisites:
+                frappe.delete_doc(&quot;Item Group&quot;, item_doc.item_group)
+                if item_doc.supplier_items:
+                    for supplier in item_doc.supplier_items:
+                        frappe.delete_doc(&quot;Supplier&quot;, supplier)
+                if item_doc.customer_items:
+                    for customer in item_doc.customer_items:
+                        frappe.delete_doc(&quot;Customer&quot;, customer)
+                for uom in item_doc.uoms:
+                    frappe.delete_doc(&quot;UOM&quot;, uom)
+</code></pre><p>In the code above, the following steps are taken:</p><ol><li>It checks the identifier passed has a value. In this case the identifier of the Item document is the <code>item_name</code>. If no <code>item_name</code> is passed, the code understands this as all testing Item documents shall be deleted:</li></ol><pre><code class=language-python>if not item_name:
+    TestItem.destroy_all()
+</code></pre><ol start=2><li>If <code>item_name</code> has a value, it is passed to the <code>frappe.db.exists</code> method to get the docname of the Item with the specific attribute. The Item document with that docname is pulled using the <code>frappe.get_doc</code> method and is deleted:</li></ol><pre><code class=language-python> item = frappe.db.exists(&quot;Item&quot;, {&quot;item_name&quot;: item_name})
+if item:
+    item_doc = frappe.get_doc(&quot;Item&quot;, item)
+    frappe.delete_doc(&quot;Item&quot;, item)
+</code></pre><ol start=3><li>There is an additional <code>destroy_prerequisites</code> parameter in the <code>destroy</code> method (and <code>destroy_all</code> as well), which deletes the linked documents to that current document i.e., the prerequisites of the document. These are deleted as well if the <code>destroy_prerequisites</code>&rsquo;s value evaluates to <code>True</code>. The default value of the <code>destroy_prerequisites</code> parameter is <code>False</code>. It is rarely advised to delete prerequisites of a document, so <strong>be careful when setting this to <code>True</code></strong>.</li></ol><pre><code class=language-python>if item:
+    item_doc = frappe.get_doc(&quot;Item&quot;, item)
+    frappe.delete_doc(&quot;Item&quot;, item)
+
+    if destroy_prerequisites:
+        frappe.delete_doc(&quot;Item Group&quot;, item_doc.item_group)
+        if item_doc.supplier_items:
+            for supplier in item_doc.supplier_items:
+                frappe.delete_doc(&quot;Supplier&quot;, supplier)
+        if item_doc.customer_items:
+            for customer in item_doc.customer_items:
+                frappe.delete_doc(&quot;Customer&quot;, customer)
+        for uom in item_doc.uoms:
+            frappe.delete_doc(&quot;UOM&quot;, uom)
+</code></pre><h3 id=514-destroy_all>5.1.4 destroy_all<a href=#514-destroy_all class=anchor aria-hidden=true>#</a></h3><p>This method deletes all Item documents in the database with <code>_Test</code> as a prefix in whatever the basis field is specified within the method (e.g., For Item documents, it is the <code>item_name</code> field).</p><pre><code class=language-python>class TestItem(unittest.TestCase):
+    @staticmethod
+    def destroy_all():
+        test_items = get_test_doc_list(&quot;tabItem&quot;, &quot;item_name&quot;)
+
+        for test_item in test_items:
+            item_doc = frappe.get_doc(&quot;Item&quot;, test_item)
+            item_doc.buying_prices = []
+            item_doc.buying_discounts = []
+            item_doc.buying_deals = []
+            item_doc.selling_prices = []
+            item_doc.selling_discounts = []
+            item_doc.selling_deals = []
+            item_doc.save()
+            frappe.db.delete(&quot;Item Barcode&quot;, {&quot;parent&quot;: test_item})
+            frappe.db.delete(&quot;UOM Conversion Detail&quot;, {&quot;parent&quot;: test_item})
+            frappe.delete_doc(&quot;Item&quot;, test_item)
+
+        TestItem.destroy_prerequisites()
+</code></pre><p>In the code above, the following steps are taken:</p><ol><li>It calls the <code>get_test_doc_list</code> function imported from the <code>erpnext.tests.utils</code> module, which looks like this:</li></ol><pre><code class=language-python>def get_test_doc_list(table_name, filter_column_name):
+    test_doc_list = frappe.db.sql(
+        &quot;&quot;&quot;
+            select name
+            from `{0}`
+            where {1} like '%\\_Test%'
+        &quot;&quot;&quot;.format(
+            table_name, filter_column_name
+        ),
+        as_list=1,
+    )
+
+    return list(zip(*test_doc_list))[0] if test_doc_list else []
+</code></pre><blockquote><p>The <code>get_test_doc_list</code> method returns all <code>name</code> values in the specified table (<code>table_name</code>) and filters the rows such that only those with <code>_Test</code> in the filter field (<code>filter_column_name</code>) are returned.</p></blockquote><ol start=2><li>It loops over every docname returned by the <code>get_test_doc_list</code> function and removes all links to other documents and child table rows that have a Link field to the current DocType. The reason for this is because the system throws an error when a document is deleted but that document is linked in another existing document (e.g., when an Item document linked to an existing Item Price is deleted). In order to resolve this issue, we have to unlink them first (and/or delete the other document) before we delete the current document.</li></ol><pre><code class=language-python>for test_item in test_items:
+    item_doc = frappe.get_doc(&quot;Item&quot;, test_item)
+    item_doc.buying_prices = []
+    item_doc.buying_discounts = []
+    item_doc.buying_deals = []
+    item_doc.selling_prices = []
+    item_doc.selling_discounts = []
+    item_doc.selling_deals = []
+    item_doc.save()
+    frappe.db.delete(&quot;Item Barcode&quot;, {&quot;parent&quot;: test_item})
+    frappe.db.delete(&quot;UOM Conversion Detail&quot;, {&quot;parent&quot;: test_item})
+    frappe.delete_doc(&quot;Item&quot;, test_item)
+
+TestItem.destroy_prerequisites()
+</code></pre><blockquote><p><strong>Example:</strong> For the Item DocType, such unlinking has to be done for Item Price, Item Buying Discount, Item Selling Discount, Item Buying Deal, and Item Selling Deal, as shown in the code above.</p></blockquote><h3 id=515-destroy_prerequisites>5.1.5 destroy_prerequisites<a href=#515-destroy_prerequisites class=anchor aria-hidden=true>#</a></h3><p>This method deletes the prerequisite documents linked to the current document. It takes similar arguments as the <code>setup_prerequisites</code>, <strong>all of which are keyword arguments</strong> and have default values that evaluate to <code>False</code> (e.g., <code>None</code>, <code>[]</code>). It deletes the actual documents linked to the current document based on the arguments passed to identify them using their DocTypes' corresponding <code>destroy</code> methods.</p><p>A few things to note:</p><ol><li><p>Check first if the field in the current document is required. In the Item DocType, the Item Group is required, while the Suppliers are not. Hence, the <code>destroy_prerequisites</code> method shall check first if a non-empty list for the <code>suppliers</code> parameter is passed, while the Item Group is deleted in every call.</p></li><li><p>Use the <code>destroy</code> method, and <strong>not</strong> the <code>destroy_all</code> method. This is to avoid errors in unit tests involving document deletion and linked fields.</p></li><li><p>Use this sparingly outside the <code>destroy</code> and <code>destroy_all</code> methods of its own class.</p></li></ol><pre><code class=language-python>class TestItem(unittest.TestCase):
+    @staticmethod
+    def destroy_prerequisites(
+        item_group_name=None, suppliers=[], customers=[], uoms=[]
+    ):
+        TestItemGroup.destroy(item_group_name)
+        for supplier in suppliers:
+            TestSupplier.destroy(supplier)
+        for customer in customers:
+            TestCustomer.destroy(customer)
+        for uom in uoms:
+            TestUOM.destroy(uom)
+</code></pre><h2 id=52-unit-tests>5.2 Unit Tests<a href=#52-unit-tests class=anchor aria-hidden=true>#</a></h2><p>The unit testing framework that we use at BizKit is unittest. Read its official documentation <a href=https://docs.python.org/3/library/unittest.html>here</a>.</p><h3 id=521-red-green-refactor>5.2.1 Red, Green, Refactor<a href=#521-red-green-refactor class=anchor aria-hidden=true>#</a></h3><h4 id=5211-getting-started>5.2.1.1 Getting Started<a href=#5211-getting-started class=anchor aria-hidden=true>#</a></h4><p>The red, green, refactor approach is a common technique used in test-driven development. It consists of the following steps:</p><ol><li><span style=color:red>Red</span>: Write a failing test for a piece of functionality that you want to add to your code. The test should define the expected behavior of the code and should be written before the code itself is written.</li><li><span style=color:green>Green</span>: Write the code to make the test pass. This should be done in a way that satisfies the requirements of the test and ensures that the code works as expected. This is typically the minimum amount of code needed to make the test pass.</li><li><span style=color:blue>Refactor</span>: Once the code passes the test, you can refactor the code to improve its design, readability, and performance. This is done without changing the functionality of the code, so the tests should still pass.</li></ol><p>The red-green-refactor approach is useful because it helps you focus on one small piece of functionality at a time, which makes the development process more manageable. It also encourages you to think about the design of your code upfront, and helps ensure that your code is well-tested.</p><h4 id=5212-example>5.2.1.2 Example<a href=#5212-example class=anchor aria-hidden=true>#</a></h4><p>Here is an example of the red, green, refactor approach in test-driven development:</p><ol><li><span style=color:red>Red</span>: Write a test to check that a function called <code>add</code> can be used to add two numbers together and return the result. The test should define the expected behavior of the <code>add</code> function, and should be written before the <code>add</code> function itself is written.</li></ol><pre><code class=language-python>def test_add():
+  result = add(2, 3)
+  assert result == 5
+</code></pre><ol start=2><li><span style=color:green>Green</span>: Write the <code>add</code> function to make the test pass. This should be done in a way that satisfies the requirements of the test and ensures that the <code>add</code> function works as expected.</li></ol><pre><code class=language-python>def add(a, b):
+  return 5
+</code></pre><ol start=3><li><span style=color:blue>Refactor</span>: Once the <code>add</code> function passes the test, you can refactor the code to make it more modular and readable. This might involve restructuring the code, adding comments, or making other improvements.</li></ol><pre><code class=language-python>def add(a, b):
+  # Return the sum of a and b
+  return a + b
+</code></pre><p>In this example, the red, green, refactor approach is used to write a simple function called <code>add</code> that can be used to add two numbers together and return the result. The test is written first, and then the code is written to make the test pass. The code is then refactored to improve its readability and maintainability. After refactoring, more tests are added and/or the existing tests are updated to handle more scenarios.</p><h3 id=522-basic-rules>5.2.2 Basic Rules<a href=#522-basic-rules class=anchor aria-hidden=true>#</a></h3><p>There are several basic rules that you should follow when writing unit tests in Frappe:</p><ol><li>Each test case should be a subclass of <code>unittest.TestCase</code> and should contain one or more test methods that begin with the word <code>test</code>.</li><li>Test methods should use the various assertions provided by the <code>unittest</code> module to verify that the code under test is working correctly.</li><li>Test cases should be isolated from one another. This means that each test should run independently and not depend on any other test to be run first.</li><li>Test cases should be repeatable. This means that the same test should produce the same results every time it is run, regardless of the environment or other factors.</li><li>Test cases should be thorough. This means that they should cover all relevant scenarios and test for all possible outcomes.</li><li>Test cases should be easy to read and understand. This means that they should be well-structured and use clear, descriptive names for variables and methods.</li><li>Test code is still code. It should follow the same standards as production code (e.g., DRY, KISS principles).</li></ol><h3 id=523-steps>5.2.3 Steps<a href=#523-steps class=anchor aria-hidden=true>#</a></h3><p>To write unit tests in the Frappe framework, you can follow these steps:</p><ol><li>Start by creating a new file for your tests. In Frappe, unit tests can be placed in a <code>tests</code> directory within an app or inside a doctype&rsquo;s directory. For example, if you are writing tests for the <code>frappe</code> app, you would create a new file called <code>tests/test_my_module.py</code> (or <code>my_doctype/test_my_doctype.py</code> if you are testing a doctype).</li><li>Import the <code>unittest</code> module and the app module that you want to test. For example:</li></ol><pre><code class=language-python>import unittest
+from my_module import my_module_function
+</code></pre><ol start=3><li><p>Next, create a new class for your tests, which will be derived from the <code>unittest.TestCase</code> class. This class will contain all of the tests for your module or doctype.</p></li><li><p>Within the <code>TestCase</code> subclass, you can now define individual test methods. Each test method should be named starting with <code>test_</code>, and should contain one or more assertions that test a specific behavior of the code being tested.</p></li></ol><p>Here is an example of how this might look in the <code>test_my_module.py</code> file:</p><pre><code class=language-python>import unittest
+from my_module import my_module_function
+
+class TestMyModule(unittest.TestCase):
+    def setUp(self):
+        frappe.set_user(&quot;Administrator&quot;)
+        create_test_data()
+
+    def tearDown(self):
+        frappe.set_user(&quot;Administrator&quot;)
+        delete_test_data()
+
+    def test_my_module_function(self):
+        # Test code goes here
+        frappe.set_user(&quot;test@example.com&quot;)
+        self.assertEqual(my_module_function(), &quot;expected output&quot;)
+</code></pre><p>The <code>setUp</code> function is used to perform any necessary setup tasks before unit tests within a <code>TestCase</code> class are run. This can include things like opening database connections, creating temporary files, or modifying global state in a way that is necessary for the test to run properly.</p><p>The <code>tearDown</code> function is used to perform any necessary clean up tasks after unit tests within a <code>TestCase</code> class are run. This can include things like closing any open database connections, cleaning up temporary files, or restoring any modified global state.</p><p>The <code>setUp</code> and <code>tearDown</code> functions are both optional, and you only need to use them if your tests require some kind of setup or cleanup. In most cases, it is a good idea to use these functions to make your tests more modular and easier to maintain.</p><ol start=5><li>Once you have written your tests, you can run them using the <code>bench</code> command-line tool from within the app&rsquo;s directory. This will execute all of the test cases and display the results.</li></ol><pre><code class=language-bash>bench run-tests
+</code></pre><blockquote><p>Note: Testing is disabled by default. You can enable tests by entering following command:</p></blockquote><pre><code class=language-bash>bench --site site_name set-config allow_tests true
+</code></pre><p>That&rsquo;s it! These are the basic steps for writing and running unit tests in the Frappe framework. Keep in mind that there are many other features and options available for unit testing in Frappe, so you may want to consult the <a href=https://frappeframework.com/docs/v13/user/en/guides/automated-testing/unit-testing>official Frappe documentation</a> for more information.</p><h3 id=524-additional-reminders-and-tips>5.2.4 Additional Reminders and Tips<a href=#524-additional-reminders-and-tips class=anchor aria-hidden=true>#</a></h3><p>A few things to remember when writing unit tests:</p><ol><li>As much as possible, avoid using default document names (e.g., <code>_Test Item</code>). Create documents with names specific to the unit test to ensure that the attributes of the item are those known by the unit test. One way to do this is to use the test name when creating the document (e.g., <code>_Test Item test_deduct_item_discounts_from_item_amounts</code>).</li><li>Avoid deleting documents and transactions to avoid errors when deleting documents linked to other documents.</li><li>Start with a small, well-defined task. This will help you focus on the task at hand and avoid getting overwhelmed.</li><li>Write a test for the task before you write the code. This will help you understand the requirements and constraints of the task, and it will give you a clear goal to work towards.</li><li>Write the minimum amount of code needed to make the test pass. This will help you avoid over-engineering and keep your code simple and focused.</li><li>Refactor your code to improve its design and readability. This will help you make your code more maintainable and easier to understand.</li><li>Repeat the process for each new feature or task you want to implement. This will help you build a suite of tests that will give you confidence in the correctness and completeness of your code.</li><li>Be persistent and keep practicing. Test-driven development can be challenging at first, but it becomes easier and more natural with time and practice.</li><li>To make sure your test data doesn&rsquo;t mess with the real data in your ERPNext instance, run the tests on a separate test site with the necessary apps installed. (Tip: You can check the <code>run_tests.sh</code> file under the erpnext repo for the steps taken to run all BizKit-updated tests.)</li><li>Avoid editing the setup methods without making sure that all updated tests run correctly with your proposed change. Additionally, as much as possible, only include required fields in the parameters in the <code>create</code> methods.</li></ol><h1 id=6-running-unit-tests>6 Running Unit Tests</h1><p>This is the <em>exciting</em> part! (lol is it really)</p><p>Follow these steps when running unit tests in your local instance:</p><ol><li>Run your unit tests individually first (using the <code>--test</code> flag).</li><li>Once all your unit tests have passed individually, run the whole module/DocType if possible (using the <code>--doctype</code> or <code>--module</code> flag).</li><li>If all tests pass as well, run all BizKit-updated tests (using the <code>bench run-bizkit-tests</code> command). Make sure that your new tests are accounted for in the <code>updated_doctypes.txt</code> and/or <code>updated_modules.txt</code> file.</li><li>If you encounter no errors while running all BizKit-updated tests, you&rsquo;re <strong>#MarkedAsSafe</strong>!</li></ol><div class=my-n3></div></main></div></div></div><footer class="footer text-muted"><div class=container><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://github.com/>GitHub</a>, <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a></li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.2374eee79bc19379a4404a900e042aef91675978a6686beeb97b3b0fa80af5c349abc1304de36298d942cde796148b853299ff49801257ee2b89e89ac427d75b.js integrity="sha512-I3Tu55vBk3mkQEqQDgQq75FnWXimaGvuuXs7D6gK9cNJq8EwTeNimNlCzeeWFIuFMpn/SYASV+4rieiaxCfXWw==" crossorigin=anonymous defer></script><script src=/js/highlight.min.06bc575474b7870a192cb49dce8845ac4471f5e504357081665555fe252a37837b72cca0f58157a9615ff384d3e439e26f58c94416a4b744c27b3056adfad1aa.js integrity="sha512-BrxXVHS3hwoZLLSdzohFrERx9eUENXCBZlVV/iUqN4N7csyg9YFXqWFf84TT5Dnib1jJRBakt0TCezBWrfrRqg==" crossorigin=anonymous defer></script><script src=/main.min.7ab523108435955765bcb88a0ee704f412ba01646b5478e84f3b9feb24f0ce750a14c3f7bd9a62408fe21e41996d361a9eb29f77e85dfe77b7e17f7623bd3a97.js integrity="sha512-erUjEIQ1lVdlvLiKDucE9BK6AWRrVHjoTzuf6yTwznUKFMP3vZpiQI/iHkGZbTYanrKfd+hd/ne34X92I706lw==" crossorigin=anonymous defer></script><script src=/index.min.002411d984ea4b11707c12deda201f730addd6d82bf1a2878ab51ae4beef85616805a729568fb1299b0e2405bf3254fd9e928b43067c6cb345552074332e6153.js integrity="sha512-ACQR2YTqSxFwfBLe2iAfcwrd1tgr8aKHirUa5L7vhWFoBacpVo+xKZsOJAW/MlT9npKLQwZ8bLNFVSB0My5hUw==" crossorigin=anonymous defer></script></body></html>
