@@ -47,6 +47,7 @@ Currently, the following are the child DocTypes for discounts:
 - Item Selling Discounts
 - Supplier Buying Discounts
 - Customer Selling Discounts
+- Principal Buying Discounts
 
 ## 2.2 Validations
 
@@ -97,6 +98,25 @@ class Customer(TransactionBase):
         validate_selling_discounts(self)
 ```
 
+## 2.2.4 Principal Discounts
+
+For Principal Discounts, only Buying Discounts are available:
+
+```python
+class Principal(Document):
+    def validate(self):
+        self.validate_discounts()
+
+    def validate_discounts(self):
+        for item in self.buying_discounts:
+            item.validate_discount_values()
+
+class PrincipalBuyingDiscount(Document):
+    def validate_discount_values(self):
+        # If discount is Actual on Total, checks if discount amount is not negative
+        # If discount is On Total, Compounding, checks if discount percentage is not negative
+```
+
 ## 2.3 Pricing Rule Controller
 
 Pricing Rule is another DocType in ERPNext. Pricing Rules are a way to modify the rates and/or quantities of items. When the discounts are saved on the master data, Pricing Rules corresponding to these discounts are created or updated (the same way Item Price documents are created/updated). The discounts are not stored in the master data's child table itself, but in their own Pricing Rule documents.
@@ -145,8 +165,50 @@ There are multiple touchpoints on a transaction for discounts:
    Inside the `item_code` form event of `erpnext.TransactionController`, the ``
 
 2. Price List Rate in the Items table is changed
+
+   Inside the `price_list_rate` form event of `erpnext.buying.BuyingController`, if the document is a Purchase Order, Purchase Invoice, or Purchase Receipt, it will call on `display_transaction_discounts` under `erpnext.multiple_discounts`
+
+   ```js
+   price_list_rate: function (doc, cdt, cdn) {
+       ...
+       if (in_list(["Purchase Order", "Purchase Invoice", "Purchase Receipt", "Supplier Quotation"], this.frm.doc.doctype)) {
+           erpnext.multiple_discounts.display_transaction_discounts(this.frm);
+       }
+   ```
+
+   Then under `erpnext.multiple_discounts`, it will call on the `get_transaction_discounts` method from the `discounts_controller` on the backend
+
+   ```js
+   frappe.call("erpnext.controllers.discounts_controller.get_transaction_discounts",
+       {
+           doc: frm.doc,
+       }
+   )
+   ```
+
+   And finally under `get_transaction_discounts`, if finds the respective Pricing Rules that are classified as "Transaction" for Supplier Discounts, and "Principal" for Principal Discounts using an SQL query
+
+   ```python
+   @frappe.whitelist()
+   def get_transaction_discounts(doc):
+       # Selects enabled pricing rules that are labelled "Transaction" and "Principal" under the specified Supplier
+       # For principal discounts, adds another query to filter the principals based on the specified Principal
+       # Returns the transaction discounts in a form of a dict
+   ```
+
 3. Qty is the Items table is changed
+
 4. Transaction Discounts are updated
+
+5. Supplier/Principal is changed after Transaction Discounts was updated
+
+   It will remove the respective discounts that were previously applied, then would fetch the new set of Transaction Discounts based on the given Supplier/Principal using `display_transaction_discounts`
+
+   ```js
+   () => erpnext.multiple_discounts.remove_other_principal_transaction_discounts(this.frm),
+   () => erpnext.multiple_discounts.remove_other_supplier_transaction_discounts(this.frm),
+   () => erpnext.multiple_discounts.display_transaction_discounts(this.frm)
+   ```
 
 # 4 Recommendations
 
