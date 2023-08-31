@@ -145,7 +145,8 @@ Analyze the code for any performance bottlenecks and work with the development t
 - Utilize the **Network** tab in the browser's developer tools to identify slow requests and analyze the code for potential optimization areas.
 - Use Frappe logs for debugging and identifying bottlenecks in the code. This is especially useful when running the application in production mode.
 - In developer mode, view real-time logs in the terminal window where `bench start` is running.
-    - When you write print statements in your python code, the output will be displayed in the terminal window.
+    - When you write print statements in your Python code, the output will be displayed in the terminal window.
+
 
 #### Network Tab
 The Network tab in a browser's developer tools allows you to monitor and analyze the network activity between the browser and the server, helping you identify bottlenecks, slow-loading resources, and other issues that might affect the overall performance of your web application.

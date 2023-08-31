@@ -91,7 +91,8 @@ innodb_buffer_pool_instances=NUMBER
 
 Replace the pool size value by the recommended value from the query. If the recommended pool size is higher than or equal to 2G, select an adequate value for `innodb_buffer_pool_instances` such that each pool size is atleast 1G. (Default is 1)
 
-3. Then restart your mariadb service by running the following command:
+3. Then restart your MariaDB service by running the following command:
+
 ```
 sudo service mysql restart
 ```
