@@ -231,7 +231,7 @@ Because at this point we still don't know any better, we will be creating a sepa
   $bench_path build --app $1
   ```
 
-  Now that we have the scripts, we can add the steps to the job. We will use the `if` keyword to execute the step only if the corresponding file type was changed. For example, if a Python file was changed, we will execute the `bench migrate` command. If a file inside the `customizations/initial` folder was changed, we will execute the `bench import-initial-customization` command. If a public JS file was changed, we will execute the `bench build` command. Here is how it looks like:
+  Now that we have the scripts, we can add the steps to the job. We will use the `if` keyword to execute the step only if the corresponding file type was changed. For example, if a Python file was changed, we will execute the `bench migrate` command. If a file inside the `customizations/initial` folder was changed, we will execute the `bench import-initial-customization` command. If a public JS file was changed, we will execute the `bench build` command. Here is how it looks:
 
   ```yaml
         - name: Run bench migrate
