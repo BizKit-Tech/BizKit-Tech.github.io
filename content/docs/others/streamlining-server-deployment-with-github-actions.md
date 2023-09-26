@@ -12,26 +12,26 @@ toc: true
 ---
 ## Introduction
 
-### 1. Problem
+### A. Problem
 
 Deploying code to development servers can be a time-consuming and error-prone process when done manually. As of this writing, we have a total of 11 development servers, each requiring the following steps for deployment:
 
-- Make changes to the codebase
-- Push the changes to GitHub
-- SSH into each individual dev server
-- Pull the latest changes from GitHub
-- Depending on the nature of the changes, execute `bench migrate`, `bench build` or `bench import-initial-customization`
+1. Make changes to the codebase
+2. Push the changes to GitHub
+3. SSH into each individual dev server
+4. Pull the latest changes from GitHub
+5. Depending on the nature of the changes, execute `bench migrate`, `bench build` or `bench import-initial-customization`
 
 As the development team continues to grow and the frequency of code deployments increases, this manual process becomes increasingly inefficient and error-prone. It not only consumes valuable developer time but also introduces the risk of human errors creeping into the deployment process.
 
-### 2. Solution
+### B. Solution
 
 To address the challenges posed by manual deployment, we could automate the entire deployment process using [**GitHub Actions**](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions). Since our source code is already hosted on GitHub, automating deployments with GitHub Actions provides an ideal solution.
 
 **Ideal Process:**
-- Developers make changes to the codebase
-- They push the changes to GitHub
-- GitHub Actions automatically deploys the changes to the appropriate development servers
+1. Developers make changes to the codebase
+2. They push the changes to GitHub
+3. GitHub Actions automatically deploys the changes to the appropriate development servers
 
 By leveraging GitHub Actions, we can streamline the deployment process, making it more efficient, consistent, and less error-prone.
 
@@ -39,15 +39,15 @@ By leveraging GitHub Actions, we can streamline the deployment process, making i
 
 In this section, we will go through the process of creating a GitHub Actions workflow to automate the deployment of our code to multiple development servers.
 
-### 1. Creating the Base Workflow: One Job for Every Server
+### A. Creating the Base Workflow: One Job for Every Server
 
 To start automating our deployment process, let's follow these steps:
 
-#### a. Create a New .yaml File for the Workflow
+#### 1. Create a New .yaml File for the Workflow
 
 Let's begin by creating a new `.yaml` file in the `.github/workflows` folder within our repository to define the workflow. Let's name it `deploy-to-dev-servers.yaml`. This file will contain the instructions for GitHub Actions.
 
-#### b. Trigger Workflow on Push to Test Branch
+#### 2. Trigger Workflow on Push to Test Branch
 
 Next, we are going to configure the workflow to trigger when code changes are pushed to the desired branch (e.g., `test`). We can use the `on` keyword to specify the event that triggers the workflow, like this:
 
@@ -61,7 +61,7 @@ on:
       - test
 ```
 
-#### c. Define the Environment Variables
+#### 3. Define the Environment Variables
 
 To ensure security and avoid hardcoding sensitive information, such as SSH keys, access tokens, and server IP addresses, we will use [GitHub Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#about-secrets) to store these values securely. GitHub Secrets can be accessed within our workflow, and they help keep our credentials safe.
 
@@ -78,7 +78,7 @@ env:
   SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
 ```
 
-#### d. Create a Job for Every Server
+#### 4. Create a Job for Every Server
 
 Because at this point we still don't know any better, we will be creating a separate job for each server. This is not ideal because it will be difficult to maintain as the number of servers grows, but we will get to that later. For now, let's do it this way.
 
@@ -267,7 +267,7 @@ Because at this point we still don't know any better, we will be creating a sepa
 
 But imagine duplicating all of the steps above for every job and across multiple repositories. It would be a nightmare to maintain. So, instead of repeatedly defining the steps, we can create a reusable job with the necessary steps and use it for every job in our main workflow. This is where GitHub's [**composite actions**](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action) come in.
 
-### 2. Refactoring the Workflow (Part 1): Creating a Composite Action
+### B. Refactoring the Workflow (Part 1): Creating a Composite Action
 
 Let's start by creating a new GitHub repository named `bizkit_composite_actions`. Inside this repository, let's establish a folder structure as follows:
    - Create an `actions` folder.
@@ -490,7 +490,7 @@ jobs:
 
 Looks good so far, but we can still improve it further. Since every job is still using the same steps, why don't we just loop through a list of our dev servers? Good thing GitHub Actions has [**matrix strategies**](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs) that allow us to do just that.
 
-### 3. Refactoring the Workflow (Part 2): Using a Matrix Strategy
+### C. Refactoring the Workflow (Part 2): Using a Matrix Strategy
 
 A matrix strategy allows us to run a job multiple times with different configurations. This is perfect for our use case because we can run the same job for every server, but with different parameters.
 
@@ -566,7 +566,7 @@ It looks a lot cleaner than the previous iterations, doesn't it?
 
 But wait, there's more ~
 
-### 4. Checking for Skipped Dev Servers
+### D. Checking for Skipped Dev Servers
 
 We are almost done, but there is one more thing we need to do. Sometimes there is a need to skip a dev server from the deployment process. For instance, we might want to skip the `fork_dev` server because it is being used for user training and we don't want to disrupt the users. It is not ideal to remove the `fork_dev` server from the matrix because we still need to deploy to it again in the future. So, what we need is a way to skip a server without removing it from the matrix.
 
