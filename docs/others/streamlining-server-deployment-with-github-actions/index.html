@@ -1,0 +1,557 @@
+<!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="ie=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-regular.woff2 type=font/woff2 crossorigin><link rel=preload as=font href=/fonts/vendor/jost/jost-v4-latin-700.woff2 type=font/woff2 crossorigin><link rel=stylesheet href=/main.5cb8b0a41f1ff6917b4715c721f1f9a3334ad90726e578bdc86900ac95c03ac549a1b8d9b257988cb5a6bd70a9eed939e36fcbb2519e61b67847ca3d74ccfd54.css integrity="sha512-XLiwpB8f9pF7RxXHIfH5ozNK2Qcm5Xi9yGkArJXAOsVJobjZsleYjLWmvXCp7tk542/LslGeYbZ4R8o9dMz9VA==" crossorigin=anonymous><noscript><style>img.lazyload{display:none}</style></noscript><meta name=robots content="index, follow"><meta name=googlebot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><meta name=bingbot content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"><title>Streamlining Server Deployment with Github Actions - Home</title><meta name=description content="BizKit's documentation site."><link rel=canonical href=/docs/others/streamlining-server-deployment-with-github-actions/><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content="/bizkit.jpg"><meta name=twitter:title content="Streamlining Server Deployment with Github Actions"><meta name=twitter:description content="Introduction A. Problem Deploying code to development servers can be a time-consuming and error-prone process when done manually. We need to perform the following deployment steps on multiple development servers:
+ Make changes to the codebase Push the changes to GitHub SSH into each individual dev server Pull the latest changes from GitHub Depending on the nature of the changes, execute the appropriate bench command:  bench migrate is used for changes in Python, JS, and JSON files, as well as changes inside the customizations folder (custom fields, custom properties, custom scripts, print formats) bench build is used for changes in public HTML, CSS, and JS files bench import-initial-customization is used for changes inside the customizations/initial folder    As the development team continues to grow and the frequency of code deployments increases, this manual process becomes increasingly inefficient and error-prone."><meta name=twitter:site content="@"><meta name=twitter:creator content="@"><meta property="og:title" content="Streamlining Server Deployment with Github Actions"><meta property="og:description" content="Introduction A. Problem Deploying code to development servers can be a time-consuming and error-prone process when done manually. We need to perform the following deployment steps on multiple development servers:
+ Make changes to the codebase Push the changes to GitHub SSH into each individual dev server Pull the latest changes from GitHub Depending on the nature of the changes, execute the appropriate bench command:  bench migrate is used for changes in Python, JS, and JSON files, as well as changes inside the customizations folder (custom fields, custom properties, custom scripts, print formats) bench build is used for changes in public HTML, CSS, and JS files bench import-initial-customization is used for changes inside the customizations/initial folder    As the development team continues to grow and the frequency of code deployments increases, this manual process becomes increasingly inefficient and error-prone."><meta property="og:type" content="article"><meta property="og:url" content="/docs/others/streamlining-server-deployment-with-github-actions/"><meta property="og:image" content="/bizkit.jpg"><meta property="article:published_time" content="2023-09-13T13:43:10+08:00"><meta property="article:modified_time" content="2023-09-13T13:43:10+08:00"><meta property="og:site_name" content="Home"><meta property="article:publisher" content="https://www.facebook.com/BizKitTechnologies"><meta property="article:author" content="https://www.facebook.com/BizKitTechnologies"><meta property="og:locale" content="en_US"><script type=application/ld+json>{"@context":"https://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"\/docs\/others\/streamlining-server-deployment-with-github-actions\/"},"headline":"Streamlining Server Deployment with Github Actions","image":[],"datePublished":"2023-09-13T13:43:10CET","dateModified":"2023-09-13T13:43:10CET","author":{"@type":"Organization","name":"Home"},"publisher":{"@type":"Organization","name":"Home","logo":{"@type":"ImageObject","url":"\/bizkit.png"}},"description":""}</script><script type=application/ld+json>{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"\/"},{"@type":"ListItem","position":2,"name":"Docsothersstreamlining Server Deployment With Github Actions","item":"\/docsothersstreamlining-server-deployment-with-github-actions\/"}]}</script><meta name=theme-color content="#fff"><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/site.webmanifest></head><body class="docs single"><div class="header-bar fixed-top"></div><header class="navbar fixed-top navbar-expand-md navbar-light"><div class=container><input class="menu-btn order-0" type=checkbox id=menu-btn>
+<label class="menu-icon d-md-none" for=menu-btn><span class=navicon></span></label><a class="navbar-brand order-1 order-md-0 me-auto" href=/>Home</a>
+<button id=mode class="btn btn-link order-2 order-md-4" type=button aria-label="Toggle mode">
+<span class=toggle-dark><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></span><span class=toggle-light><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-sun"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span></button><ul class="navbar-nav social-nav order-3 order-md-5"><li class=nav-item><a class=nav-link href=https://github.com/BizKit-Tech/BizKit-Tech.github.io><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentcolor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37.0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44.0 0020 4.77 5.07 5.07.0 0019.91 1S18.73.65 16 2.48a13.38 13.38.0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07.0 005 4.77 5.44 5.44.0 003.5 8.55c0 5.42 3.3 6.61 6.44 7A3.37 3.37.0 009 18.13V22"/></svg><span class="ms-2 visually-hidden">GitHub</span></a></li></ul><div class="collapse navbar-collapse order-4 order-md-1"><ul class="navbar-nav main-nav me-auto order-5 order-md-2"><li class="nav-item active"><a class=nav-link href=/docs/start-here/introduction/>Docs</a></li></ul><div class="break order-6 d-md-none"></div><form class="navbar-form flex-grow-1 order-7 order-md-3"><input id=userinput class="form-control is-search" type=search placeholder="Search docs..." aria-label="Search docs..." autocomplete=off><div id=suggestions class="shadow bg-white rounded"></div></form></div></div></header><div class="wrap container" role=document><div class=content><div class="row flex-xl-nowrap"><div class="col-lg-5 col-xl-4 docs-sidebar"><nav class=docs-links aria-label="Main navigation"><ul class="list-unstyled collapsible-sidebar"><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#start-here aria-expanded=true>
+Start Here</button><div class=collapse id=start-here><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/start-here/introduction/>Introduction</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#training aria-expanded=false>
+Training</button><div class=collapse id=training><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/training/bench-commands/>Bench Commands</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#setup aria-expanded=false>
+Setup</button><div class=collapse id=setup><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/setup/set-up-instance/>Set Up an Instance</a></li><li><a class="link-dark rounded" href=/docs/setup/add-custom-domain/>Add Custom Domain</a></li><li><a class="link-dark rounded" href=/docs/setup/set-up-dns-multitenancy/>Set Up DNS Multitenancy</a></li><li><a class="link-dark rounded" href=/docs/setup/set-up-https/>Set Up HTTPS</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#projects aria-expanded=false>
+Projects</button></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#standards aria-expanded=false>
+Standards</button><div class=collapse id=standards><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/standards/code-review-guidelines/>Code Review Guidelines</a></li><li><a class="link-dark rounded" href=/docs/standards/coding-standards/>Coding Standards</a></li><li><a class="link-dark rounded" href=/docs/standards/commit-standards/>Commit Standards</a></li><li><a class="link-dark rounded" href=/docs/standards/tdd/>Test-Driven Development Guidelines</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#others aria-expanded=false>
+Others</button><div class="collapse show" id=others><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/others/investigating-performance-issues/>Investigating Performance Issues</a></li><li><a class="link-dark rounded" href=/docs/others/performance-tuning-methods/>Performance Tuning Methods</a></li><li><a class="link-dark rounded active" href=/docs/others/streamlining-server-deployment-with-github-actions/>Streamlining Server Deployment with Github Actions</a></li></ul></div></li><li class=mb-1><button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle=collapse data-bs-target=#help aria-expanded=false>
+Help</button><div class=collapse id=help><ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small"><li><a class="link-dark rounded" href=/docs/help/commands/>Commands</a></li><li><a class="link-dark rounded" href=/docs/help/how-to-update/>How to Update</a></li><li><a class="link-dark rounded" href=/docs/help/troubleshooting/>Troubleshooting</a></li><li><a class="link-dark rounded" href=/docs/help/faq/>FAQ</a></li></ul></div></li></ul></nav></div><nav class="docs-toc d-none d-xl-block col-xl-3" aria-label="Secondary navigation"><div class=page-links><h3>On this page</h3><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a><ul><li><a href=#a-problem>A. Problem</a></li><li><a href=#b-solution>B. Solution</a></li></ul></li><li><a href=#creating-the-github-actions-workflow>Creating the GitHub Actions Workflow</a><ul><li><a href=#a-creating-the-base-workflow-one-job-for-every-server>A. Creating the Base Workflow: One Job for Every Server</a></li><li><a href=#b-refactoring-the-workflow-part-1-creating-a-composite-action>B. Refactoring the Workflow (Part 1): Creating a Composite Action</a></li><li><a href=#c-refactoring-the-workflow-part-2-using-a-matrix-strategy>C. Refactoring the Workflow (Part 2): Using a Matrix Strategy</a></li><li><a href=#d-checking-for-skipped-dev-servers>D. Checking for Skipped Dev Servers</a></li></ul></li><li><a href=#tldr>TL;DR</a></li><li><a href=#references>References</a></li></ul></nav></div></nav><main class="docs-content col-lg-11 col-xl-9"><nav aria-label=breadcrumb><ol class=breadcrumb><li class=breadcrumb-item><a href=/>Home</a></li><li class=breadcrumb-item><a href=/docs/>Docs</a></li><li class=breadcrumb-item><a href=/docs/others/>Others</a></li><li class="breadcrumb-item active" aria-current=page>Streamlining Server Deployment with Github Actions</li></ol></nav><h1>Streamlining Server Deployment with Github Actions</h1><p class=lead>Author/s: Gab Barbudo</p><h2 id=introduction>Introduction<a href=#introduction class=anchor aria-hidden=true>#</a></h2><h3 id=a-problem>A. Problem<a href=#a-problem class=anchor aria-hidden=true>#</a></h3><p>Deploying code to development servers can be a time-consuming and error-prone process when done manually. We need to perform the following deployment steps on multiple development servers:</p><ol><li>Make changes to the codebase</li><li>Push the changes to GitHub</li><li>SSH into each individual dev server</li><li>Pull the latest changes from GitHub</li><li>Depending on the nature of the changes, execute the appropriate <code>bench</code> command:<ul><li><code>bench migrate</code> is used for changes in Python, JS, and JSON files, as well as changes inside the <code>customizations</code> folder (custom fields, custom properties, custom scripts, print formats)</li><li><code>bench build</code> is used for changes in public HTML, CSS, and JS files</li><li><code>bench import-initial-customization</code> is used for changes inside the <code>customizations/initial</code> folder</li></ul></li></ol><p>As the development team continues to grow and the frequency of code deployments increases, this manual process becomes increasingly inefficient and error-prone. It not only consumes valuable developer time but also introduces the risk of human errors creeping into the deployment process.</p><h3 id=b-solution>B. Solution<a href=#b-solution class=anchor aria-hidden=true>#</a></h3><p>To address the challenges posed by manual deployment, we could automate the entire deployment process using <a href=https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions><strong>GitHub Actions</strong></a>. Since our source code is already hosted on GitHub, automating deployments with GitHub Actions provides an ideal solution.</p><p><strong>Ideal Process:</strong></p><ol><li>Developers make changes to the codebase</li><li>They push the changes to GitHub</li><li>GitHub Actions automatically deploys the changes to the appropriate development servers</li></ol><p>By leveraging GitHub Actions, we can streamline the deployment process, making it more efficient, consistent, and less error-prone.</p><h2 id=creating-the-github-actions-workflow>Creating the GitHub Actions Workflow<a href=#creating-the-github-actions-workflow class=anchor aria-hidden=true>#</a></h2><p>In this section, we will go through the process of creating a GitHub Actions workflow to automate the deployment of our code to multiple development servers.</p><h3 id=a-creating-the-base-workflow-one-job-for-every-server>A. Creating the Base Workflow: One Job for Every Server<a href=#a-creating-the-base-workflow-one-job-for-every-server class=anchor aria-hidden=true>#</a></h3><p>To start automating our deployment process, let&rsquo;s follow these steps:</p><h4 id=1-create-a-new-yaml-file-for-the-workflow>1. Create a New .yaml File for the Workflow<a href=#1-create-a-new-yaml-file-for-the-workflow class=anchor aria-hidden=true>#</a></h4><p>Let&rsquo;s begin by creating a new <code>.yaml</code> file in the <code>.github/workflows</code> folder within our repository to define the workflow. Let&rsquo;s name it <code>deploy-to-dev-servers.yaml</code>. This file will contain the instructions for GitHub Actions.</p><h4 id=2-trigger-workflow-on-push-to-test-branch>2. Trigger Workflow on Push to Test Branch<a href=#2-trigger-workflow-on-push-to-test-branch class=anchor aria-hidden=true>#</a></h4><p>Next, we are going to configure the workflow to trigger when code changes are pushed to the desired branch (e.g., <code>test</code>). We can use the <code>on</code> keyword to specify the event that triggers the workflow, like this:</p><pre><code class=language-yaml>name: Deploy-to-Dev
+run-name: Deploy to development servers by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - test
+</code></pre><h4 id=3-define-the-environment-variables>3. Define the Environment Variables<a href=#3-define-the-environment-variables class=anchor aria-hidden=true>#</a></h4><p>To ensure security and avoid hardcoding sensitive information, such as SSH keys, access tokens, and server IP addresses, we will use <a href=https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#about-secrets>GitHub Secrets</a> to store these values securely. GitHub Secrets can be accessed within our workflow, and they help keep our credentials safe.</p><p>We can utilize the <code>env</code> and GitHub <a href=https://docs.github.com/en/actions/learn-github-actions/contexts>contexts</a> to define and access these variables. This centralizes our configuration for easy maintenance and readability. For instance:</p><pre><code class=language-yaml>env:
+  APP: erpnext
+  APP_PATH: frappe-bench/apps/erpnext
+  V13_BRANCH: test
+  REPO_URL: git@github.com:${{ github.repository }}.git
+  TOKEN: ${{ secrets.GIT_TOKEN }}
+  SSH_USER: ${{ secrets.EC2_USERNAME }}
+  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+</code></pre><h4 id=4-create-a-job-for-every-server>4. Create a Job for Every Server<a href=#4-create-a-job-for-every-server class=anchor aria-hidden=true>#</a></h4><p>Because at this point we still don&rsquo;t know any better, we will be creating a separate job for each server. This is not ideal because it will be difficult to maintain as the number of servers grows, but we will get to that later. For now, let&rsquo;s do it this way.</p><ul><li><p><strong>Name the Job After the Server</strong>: Let&rsquo;s give each job a clear and descriptive name based on the server it deploys to.</p><pre><code class=language-yaml>jobs:
+  fork-dev:
+    runs-on: ubuntu-latest
+    env:
+      SERVER_NAME: fork_dev
+      SERVER_IP: ${{ secrets.FORK_DEV }}
+</code></pre></li><li><p><strong>Checkout the Code</strong>: We will utilize the <code>actions/checkout@v2</code> action to check out the code from our repository. This action makes our repository content available for the workflow.</p><pre><code class=language-yaml>    steps:
+      - uses: actions/checkout@v2
+</code></pre></li><li><p><strong>Check What Type of Files Were Changed</strong>: To determine the type of changes made in the code, we will use the <code>dorny/paths-filter@v2</code> action. This action allows us to filter paths based on file extensions, making it easier to decide whether to run <code>bench migrate</code>, <code>bench build</code>, or <code>bench import-initial-customization</code>.</p><pre><code class=language-yaml>      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            python:
+              - '${{ env.APP }}/**/*.py'
+            json:
+              - '${{ env.APP }}/**/*.json'
+            js:
+              - '${{ env.APP }}/**/*.js'
+            customizations:
+              - '${{ env.APP }}/customizations/custom_fields/**'
+              - '${{ env.APP }}/customizations/custom_properties/**'
+              - '${{ env.APP }}/customizations/custom_scripts/**'
+              - '${{ env.APP }}/customizations/print_formats/**'
+            public:
+              - '${{ env.APP }}/public/**'
+            custom_fields:
+              - '${{ env.APP }}/customizations/initial/custom_fields/**'
+            custom_properties:
+              - '${{ env.APP }}/customizations/initial/custom_properties/**'
+            custom_scripts:
+              - '${{ env.APP }}/customizations/initial/custom_scripts/**'
+            print_formats:
+              - '${{ env.APP }}/customizations/initial/print_formats/**'
+          base: ${{ github.ref }}
+</code></pre></li><li><p><strong>SSH into the Server</strong>: Inside the job, we are going to set up SSH keys and a configuration file for the SSH client. This enables secure access to the target development server.</p><p>For this to work, we must add the Amazon EC2 public key associated with GitHub Actions to the <code>authorized_keys</code> file on the server. This configuration step must be done to all of our development servers.</p><pre><code class=language-yaml>      - name: Configure SSH
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh/
+          echo &quot;$SSH_KEY&quot; &gt; ~/.ssh/${{ env.SERVER_NAME }}.key
+          chmod 600 ~/.ssh/${{ env.SERVER_NAME }}.key
+          cat &gt;&gt;~/.ssh/config &lt;&lt;END
+          Host ${{ env.SERVER_NAME }}
+            HostName ${{ env.SERVER_IP }}
+            User $SSH_USER
+            IdentityFile ~/.ssh/${{ env.SERVER_NAME }}.key
+            StrictHostKeyChecking no
+          END
+        env:
+          SSH_USER: ${{ env.SSH_USER }}
+          SSH_KEY: ${{ env.SSH_KEY }}
+</code></pre></li><li><p><strong>Pull the Code</strong>: Instead of using <code>git pull</code> using the web URL, which would require developer credentials on the server, we will use the SSH method.</p><p>To do this, we need to set up SSH keys within the dev servers and add these keys to our organization&rsquo;s GitHub account (bizkit-engineer). This will allow the server to pull the code from GitHub without requiring developer credentials.</p><p>We can generate an SSH key without a passphrase in our local machine by running:</p><pre><code class=language-powershell>ssh-keygen -t rsa
+</code></pre><p>And then we will copy the contents of the generated public key (<code>id_rsa.pub</code>) and <a href=https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account>add it to our organization&rsquo;s GitHub account</a>. It is best to label it GitHub Actions so it&rsquo;s easily identifiable.</p><p>We now need to copy the keys (<code>id_rsa</code> and <code>id_rsa.pub</code>) to the dev servers and save them inside the <code>~/.ssh</code> directory. Make sure the keys are secure by running the following commands inside the directory where the keys are saved:</p><pre><code class=language-powershell>chmod 400 id_rsa
+chmod 400 id_rsa.pub
+</code></pre><p>Then, we need to create a <code>git_pull.sh</code> file in the root directory of the server. This file will contain the commands to pull the code from GitHub. It takes three arguments: the path to the app, the repository URL, and the branch name. It first changes the directory to the app path, then checks out the specified branch and pulls the code from the repository.</p><pre><code class=language-bash>#!/bin/bash
+cd $1
+git checkout $3
+git pull $2 $3
+</code></pre><p>Finally, we add a step to the job (remember: the GitHub Actions workflow) to execute this script.</p><pre><code class=language-yaml>      - name: Run git pull
+        shell: bash
+        run: ssh ${{ env.SERVER_NAME }} '&quot;bash ./git_pull.sh ${{ env.APP_PATH }} ${{ env.REPO_URL }} ${{ env.V13_BRANCH }}'
+</code></pre></li><li><p><strong>Do <code>bench migrate</code>, <code>bench build</code> or <code>bench import-initial-customization</code> Depending on the Files Changed</strong>: Finally, we are going to create a step to execute the appropriate command (<code>bench migrate</code>, <code>bench build</code>, or <code>bench import-initial-customization</code>) based on the type of changes detected. <a name=bench-command-depending-on-file-changed></a></p><p>For this step, we need to create three bash scripts and save them in the root directory of the dev servers so we can run the <code>bench</code> commands, similar to the previous step.</p><p>First, let&rsquo;s create <code>./bench_migrate.sh</code> which is responsible for the <code>bench migrate</code> command. It takes in one argument, which is the app name.</p><pre><code class=language-bash>#! /usr/bin/bash
+cd frappe-bench
+/home/ubuntu/.pyenv/shims/bench migrate
+</code></pre><p>Next, let&rsquo;s create <code>./bench_build.sh</code> which is responsible for the <code>bench build</code> command. It also takes in the app name as an argument.</p><pre><code class=language-bash>#! /usr/bin/bash
+cd frappe-bench
+/home/ubuntu/.pyenv/shims/bench build --app $1
+</code></pre><p>Lastly, let&rsquo;s create <code>./bench_import_initial_customization.sh</code> which is responsible for the <code>bench import-initial-customization</code> command. It takes in two arguments: the app name and the customization type (<code>custom_fields</code>, <code>custom_porperties</code>, <code>custom_scripts</code>, <code>print_formats</code>).</p><pre><code class=language-bash>#! /usr/bin/bash
+cd frappe-bench
+/home/ubuntu/.pyenv/shims/bench import-initial-customization $1 $2
+</code></pre><p>As you may have noticed, we are not simply using <code>bench</code> in the scripts because we will be executing them using the <code>ssh</code> command without logging into a shell prompt. This method will not initialize the environment we are connecting to, so if <code>bench</code> is installed in a Python virtual environment, we need to specify its absolute file path so it can be executed properly.</p><p><em>Note: The bash scripts can be further improved by doing something like the script below (which you will also see later in this document):</em></p><pre><code class=language-bash>#! /usr/bin/bash
+if [ &quot;$(which bench)&quot; ]; then 
+  bench_path=&quot;$(which bench)&quot;;
+else 
+  bench_path=&quot;/home/ubuntu/.pyenv/shims/bench&quot;;
+fi
+cd frappe-bench
+$bench_path build --app $1
+</code></pre><p>Now that we have the scripts, we can add the steps to the job. We will use the <code>if</code> keyword to execute the step only if the corresponding file type was changed. For example, if a Python file was changed, we will execute the <code>bench migrate</code> command. If a file inside the <code>customizations/initial</code> folder was changed, we will execute the <code>bench import-initial-customization</code> command. If a public JS file was changed, we will execute the <code>bench build</code> command. Here is how it looks:</p><pre><code class=language-yaml>      - name: Run bench migrate
+        shell: bash
+        if: steps.filter.outputs.python == 'true' || steps.filter.outputs.json == 'true' || steps.filter.outputs.customizations == 'true' || steps.filter.outputs.js == 'true'
+        run: ssh ${{ env.SERVER_NAME }} 'bash ./bench_migrate.sh'
+
+      - name: Run bench build
+        shell: bash
+        if: steps.filter.outputs.public == 'true'
+        run: ssh ${{ env.SERVER_NAME }} 'bash ./bench_build.sh ${{ env.APP }}'
+
+      - name: Import initial custom fields
+        shell: bash
+        if: steps.filter.outputs.custom_fields == 'true'
+        run: ssh ${{ env.SERVER_NAME }} 'bash ./bench_import_initial_customization.sh ${{ env.APP }} custom_fields'
+
+      - name: Import initial custom properties
+        shell: bash
+        if: steps.filter.outputs.custom_properties == 'true'
+        run: ssh ${{ env.SERVER_NAME }} 'bash ./bench_import_initial_customization.sh ${{ env.APP }} custom_properties'
+
+      - name: Import initial custom scripts
+        shell: bash
+        if: steps.filter.outputs.custom_scripts == 'true'
+        run: ssh ${{ env.SERVER_NAME }} 'bash ./bench_import_initial_customization.sh ${{ env.APP }} custom_scripts'
+        
+      - name: Import initial print formats
+        shell: bash
+        if: steps.filter.outputs.print_formats == 'true'
+        run: ssh ${{ env.SERVER_NAME }} 'bash ./bench_import_initial_customization.sh ${{ env.APP }} print_formats'
+</code></pre></li></ul><p>But imagine duplicating all of the steps above for every job and across multiple repositories. It would be a nightmare to maintain. So, instead of repeatedly defining the steps, we can create a reusable job with the necessary steps and use it for every job in our main workflow. This is where GitHub&rsquo;s <a href=https://docs.github.com/en/actions/creating-actions/creating-a-composite-action><strong>composite actions</strong></a> come in.</p><h3 id=b-refactoring-the-workflow-part-1-creating-a-composite-action>B. Refactoring the Workflow (Part 1): Creating a Composite Action<a href=#b-refactoring-the-workflow-part-1-creating-a-composite-action class=anchor aria-hidden=true>#</a></h3><p>Let&rsquo;s start by creating a new GitHub repository named <code>bizkit_composite_actions</code>. Inside this repository, let&rsquo;s establish a folder structure as follows:</p><ul><li>Create an <code>actions</code> folder.</li><li>Inside the <code>actions</code> folder, create a new folder named <code>deploy-to-ec2</code>.</li><li>Inside the <code>deploy-to-ec2</code> folder, create a file named <code>action.yaml</code>. This file will house our composite action.</li></ul><p>We can now proceed to define the composite action.</p><p>First, we want to ensure our composite action can be adaptable across different jobs with varying parameters. We can do that by utilizing action <a href=https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#inputs>inputs</a>. These inputs will enable us to pass necessary parameters to the action dynamically.</p><pre><code class=language-yaml>name: &quot;Deploy to EC2&quot;
+description: &quot;Pushes changes to EC2 server&quot;
+
+inputs:
+  app_name:
+    description: &quot;Name of the app (e.g. erpnext)&quot;
+    required: true
+  app_path:
+    description: &quot;File path of the app (e.g. frappe-bench/apps/erpnext)&quot;
+    required: true
+  branch_name:
+    description: &quot;Name of the branch to deploy (e.g. test)&quot;
+    required: true
+  server_name:
+    description: &quot;Name of the server to deploy to (e.g. bizkit_dev)&quot;
+    required: true
+  server_ip:
+    description: &quot;IP address of the server to deploy to&quot;
+    required: true
+  ssh_user:
+    description: &quot;SSH username for the server&quot;
+    required: true
+  ssh_key:
+    description: &quot;SSH key for the server&quot;
+    required: true
+  bench_migrate_script:
+    description: &quot;Command for running bench migrate&quot;
+    required: false
+    default: &quot;bash ./bench_migrate.sh&quot;
+  bench_build_script:
+    description: &quot;Command for running bench build&quot;
+    required: false
+    default: &quot;bash ./bench_build.sh&quot;
+  bench_import_initial_customization_script:
+    description: &quot;Command for running bench import-initial-customization&quot;
+    required: false
+    default: &quot;bash ./bench_import_initial_customization.sh&quot;
+  git_pull_script:
+    description: &quot;Command for running git pull&quot;
+    required: false
+    default: &quot;bash ./git_pull.sh&quot;
+</code></pre><p>Next, let&rsquo;s define the steps of the action within the <code>action.yaml</code> file. We will use the steps we have already implemented in our original workflow script. These steps should encapsulate the logic for checking file changes, SSH access, code retrieval, and the execution of <code>bench</code> commands.</p><pre><code class=language-yaml>runs:
+  using: &quot;composite&quot;
+  steps:
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          python:
+            - '${{ inputs.app_name }}/**/*.py'
+          json:
+            - '${{ inputs.app_name }}/**/*.json'
+          js:
+            - '${{ inputs.app_name }}/**/*.js'
+          customizations:
+            - '${{ inputs.app_name }}/customizations/custom_fields/**'
+            - '${{ inputs.app_name }}/customizations/custom_properties/**'
+            - '${{ inputs.app_name }}/customizations/custom_scripts/**'
+            - '${{ inputs.app_name }}/customizations/print_formats/**'
+          public:
+            - '${{ inputs.app_name }}/public/**'
+          custom_fields:
+            - '${{ inputs.app_name }}/customizations/initial/custom_fields/**'
+          custom_properties:
+            - '${{ inputs.app_name }}/customizations/initial/custom_properties/**'
+          custom_scripts:
+            - '${{ inputs.app_name }}/customizations/initial/custom_scripts/**'
+          print_formats:
+            - '${{ inputs.app_name }}/customizations/initial/print_formats/**'
+        base: ${{ github.ref }}
+      
+    - name: Configure SSH
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh/
+        echo &quot;$SSH_KEY&quot; &gt; ~/.ssh/${{ inputs.server_name }}.key
+        chmod 600 ~/.ssh/${{ inputs.server_name }}.key
+        cat &gt;&gt;~/.ssh/config &lt;&lt;END
+        Host ${{ inputs.server_name }}
+          HostName ${{ inputs.server_ip }}
+          User $SSH_USER
+          IdentityFile ~/.ssh/${{ inputs.server_name }}.key
+          StrictHostKeyChecking no
+        END
+      env:
+        SSH_USER: ${{ inputs.ssh_user }}
+        SSH_KEY: ${{ inputs.ssh_key }}
+
+    - name: Run git pull
+      shell: bash
+      run: ssh ${{ inputs.server_name }} '${{ inputs.git_pull_script }} ${{ inputs.app_path }} ${{ env.REPO_URL }} ${{ inputs.branch_name }}'
+      env:
+        REPO_URL: git@github.com:${{ github.repository }}.git
+
+    - name: Run bench migrate
+      shell: bash
+      if: steps.filter.outputs.python == 'true' || steps.filter.outputs.json == 'true' || steps.filter.outputs.customizations == 'true' || steps.filter.outputs.js == 'true'
+      run: ssh ${{ inputs.server_name }} '${{ inputs.bench_migrate_script }}'
+
+    - name: Run bench build
+      shell: bash
+      if: steps.filter.outputs.public == 'true'
+      run: ssh ${{ inputs.server_name }} '${{ inputs.bench_build_script }} ${{ inputs.app_name }}'
+
+    - name: Import initial custom fields
+      shell: bash
+      if: steps.filter.outputs.custom_fields == 'true'
+      run: ssh ${{ inputs.server_name }} '${{ inputs.bench_import_initial_customization_script }} ${{ inputs.app_name }} custom_fields'
+
+    - name: Import initial custom properties
+      shell: bash
+      if: steps.filter.outputs.custom_properties == 'true'
+      run: ssh ${{ inputs.server_name }} '${{ inputs.bench_import_initial_customization_script }} ${{ inputs.app_name }} custom_properties'
+
+    - name: Import initial custom scripts
+      shell: bash
+      if: steps.filter.outputs.custom_scripts == 'true'
+      run: ssh ${{ inputs.server_name }} '${{ inputs.bench_import_initial_customization_script }} ${{ inputs.app_name }} custom_scripts'
+    
+    - name: Import initial print formats
+      shell: bash
+      if: steps.filter.outputs.print_formats == 'true'
+      run: ssh ${{ inputs.server_name }} '${{ inputs.bench_import_initial_customization_script }} ${{ inputs.app_name }} print_formats'
+</code></pre><p>And that&rsquo;s it! We have successfully created a composite action. Now, we can use this action in our workflow script.</p><p>Going back to our original workflow script, we are going to replace the steps starting from the step that uses <code>dorny/paths-filter@v2</code> to the last step with our composite action.</p><p>Because the composite action resides in a private repository, we need to add this step first:</p><pre><code class=language-yaml>    - name: Get composite action repo
+      uses: actions/checkout@v2
+      with:
+        repository: BizKit-Tech/bizkit_composite_actions
+        path: .github/bizkit_actions
+        token: ${{ env.TOKEN }}
+</code></pre><p>This step checks out the composite action repository and stores it in the <code>.github/bizkit_actions</code> folder in our container, ready for use.</p><p>Finally, in our workflow script, we can utilize the composite action like this:</p><pre><code class=language-yaml>    - name: Deploy to server
+      uses: ./.github/bizkit_actions/actions/deploy-to-ec2
+      with:
+        app_name: ${{ env.APP }}
+        app_path: ${{ env.APP_PATH }}
+        branch_name: ${{ env.V13_BRANCH }}
+        server_name: ${{ matrix.server_name }}
+        server_ip: ${{ secrets[matrix.server_name] }}
+        ssh_user: ${{ env.SSH_USER }}
+        ssh_key: ${{ env.SSH_KEY }}
+</code></pre><p>The workflow script at this point should look something like this, but with multiple jobs having the same steps:</p><pre><code class=language-yaml>name: Deploy-to-Dev
+run-name: Deploy to development servers by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - test
+
+env:
+  APP: bizkit_core
+  APP_PATH: frappe-bench/apps/bizkit_core
+  V13_BRANCH: test
+  REPO_URL: git@github.com:${{ github.repository }}.git
+  TOKEN: ${{ secrets.GIT_TOKEN }}
+  SSH_USER: ${{ secrets.EC2_USERNAME }}
+  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+
+jobs:
+  fork-dev:
+    runs-on: ubuntu-latest
+    env:
+      SERVER_NAME: fork_dev
+      SERVER_IP: ${{ secrets.FORK_DEV }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get composite action repo
+        uses: actions/checkout@v2
+        with:
+          repository: BizKit-Tech/bizkit_composite_actions
+          path: .github/bizkit_actions
+          token: ${{ env.TOKEN }}
+      - name: Deploy to server
+        uses: ./.github/bizkit_actions/actions/deploy-to-ec2
+        with:
+          app_name: ${{ env.APP }}
+          app_path: ${{ env.APP_PATH }}
+          branch_name: ${{ env.V13_BRANCH }}
+          server_name: ${{ env.SERVER_NAME }}
+          server_ip: ${{ env.SERVER_IP }}
+          ssh_user: ${{ env.SSH_USER }}
+          ssh_key: ${{ env.SSH_KEY }}
+</code></pre><p>Looks good so far, but we can still improve it further. Since every job is still using the same steps, why don&rsquo;t we just loop through a list of our dev servers? Good thing GitHub Actions has <a href=https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs><strong>matrix strategies</strong></a> that allow us to do just that.</p><h3 id=c-refactoring-the-workflow-part-2-using-a-matrix-strategy>C. Refactoring the Workflow (Part 2): Using a Matrix Strategy<a href=#c-refactoring-the-workflow-part-2-using-a-matrix-strategy class=anchor aria-hidden=true>#</a></h3><p>A matrix strategy allows us to run a job multiple times with different configurations. This is perfect for our use case because we can run the same job for every server, but with different parameters.</p><p>To use a matrix strategy, we need to define the matrix in the <code>jobs</code> section of our workflow script. We can do this by adding a <code>strategy</code> section inside the job. The <code>strategy</code> section contains the <code>matrix</code> section, which defines the matrix. The matrix is then defined by specifying the variables followed by their array of values. In our case, we want to define the <code>server_name</code> variable.</p><pre><code class=language-yaml>jobs:
+  deploy:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        server_name: [FORK_DEV, GIORMI_DEV, LUXEN_DEV, NORI_DEV, TTC_DEV, RAMESH_DEV, LANCE_DEV]
+</code></pre><p>Take note that the values must be the same as the names of the secrets we defined in our repository. For example, we have a secret named <code>FORK_DEV</code> that contains the IP address of the <code>fork_dev</code> server. We also have a secret named <code>GIORMI_DEV</code> that contains the IP address of the <code>giormi_dev</code> server. And so on. This is important because we will be using the values of the <code>server_name</code> variable to access the corresponding secrets.</p><p>Then we can proceed to define the steps of the job. The workflow should now look like this:</p><pre><code class=language-yaml>name: Deploy-to-Dev
+run-name: Deploy to development servers by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - test
+
+env:
+  APP: erpnext
+  APP_PATH: frappe-bench/apps/erpnext
+  V13_BRANCH: test
+  REPO_URL: git@github.com:${{ github.repository }}.git
+  TOKEN: ${{ secrets.GIT_TOKEN }}
+  SSH_USER: ${{ secrets.EC2_USERNAME }}
+  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+
+jobs:
+  deploy:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        server_name: [FORK_DEV, GIORMI_DEV, LUXEN_DEV, NORI_DEV, TTC_DEV, RAMESH_DEV, LANCE_DEV]
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get composite action repo
+        uses: actions/checkout@v2
+        with:
+          repository: BizKit-Tech/bizkit_composite_actions
+          path: .github/bizkit_actions
+          token: ${{ env.TOKEN }}
+      
+      - name: Deploy to server
+        uses: ./.github/bizkit_actions/actions/deploy-to-ec2
+        with:
+          app_name: ${{ env.APP }}
+          app_path: ${{ env.APP_PATH }}
+          branch_name: ${{ env.V13_BRANCH }}
+          server_name: ${{ matrix.server_name }}
+          server_ip: ${{ secrets[matrix.server_name] }}
+          ssh_user: ${{ env.SSH_USER }}
+          ssh_key: ${{ env.SSH_KEY }}
+</code></pre><p>It looks a lot cleaner than the previous iterations, doesn&rsquo;t it?</p><p>But wait, there&rsquo;s more ~</p><h3 id=d-checking-for-skipped-dev-servers>D. Checking for Skipped Dev Servers<a href=#d-checking-for-skipped-dev-servers class=anchor aria-hidden=true>#</a></h3><p>We are almost done, but there is one more thing we need to do. Sometimes there is a need to skip a dev server from the deployment process. For instance, we might want to skip the <code>fork_dev</code> server because it is being used for user training and we don&rsquo;t want to disrupt the users. It is not ideal to remove the <code>fork_dev</code> server from the matrix because we still need to deploy to it again in the future. So, what we need is a way to skip a server without removing it from the matrix.</p><p>We now know how to create a composite action so we can use that knowledge to create a new one that will check if a server should be skipped or not. Let&rsquo;s call it <code>check-auto-updates</code>.</p><p>As usual, in the same repository as the <code>deploy-to-ec2</code> action, we start by creating a new folder for the composite action. This time we will name it <code>check-auto-updates</code>. Inside this folder, we create the <code>action.yaml</code> file.</p><p>Similar to the <code>deploy-to-ec2</code> action, we are going to define the inputs of the action.</p><pre><code class=language-yaml>name: &quot;Check Auto Updates&quot;
+description: &quot;Check if automatic updates are enabled on the server&quot;
+
+inputs:
+  server_name:
+    description: &quot;Name of the server to deploy to (e.g. bizkit_dev)&quot;
+    required: true
+  server_ip:
+    description: &quot;IP address of the server to deploy to&quot;
+    required: true
+  ssh_user:
+    description: &quot;SSH username for the server&quot;
+    required: true
+  ssh_key:
+    description: &quot;SSH key for the server&quot;
+    required: true
+</code></pre><p>Now, the following is something we have not discussed before. We want this action to return a value indicating whether the server should be skipped or not. So, we will declare <a href=https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs-for-composite-actions>outputs</a> for the action.</p><pre><code class=language-yaml>outputs:
+  auto-update:
+    description: &quot;Whether or not to update the server&quot;
+    value: ${{ steps.check-auto-updates.outputs.auto-updates-enabled }}
+  bench-path:
+    description: &quot;Path to bench&quot;
+    value: ${{ steps.get-bench-path.outputs.bench-path }}
+</code></pre><p>The value of the outputs will be set by the steps of the action, which makes the ID of the steps important. We will be using the <code>id</code> keyword to set the ID of the steps.</p><p>In this workflow, the first thing that we want to do is to configure SSH access to the server the same way we did in the <code>deploy-to-ec2</code> action.</p><pre><code class=language-yaml>runs:
+  using: &quot;composite&quot;
+  steps:
+    - name: Configure SSH
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh/
+        echo &quot;$SSH_KEY&quot; &gt; ~/.ssh/${{ inputs.server_name }}.key
+        chmod 600 ~/.ssh/${{ inputs.server_name }}.key
+        cat &gt;&gt;~/.ssh/config &lt;&lt;END
+        Host ${{ inputs.server_name }}
+          HostName ${{ inputs.server_ip }}
+          User $SSH_USER
+          IdentityFile ~/.ssh/${{ inputs.server_name }}.key
+          StrictHostKeyChecking no
+        END
+      env:
+        SSH_USER: ${{ inputs.ssh_user }}
+        SSH_KEY: ${{ inputs.ssh_key }}
+</code></pre><p>Next, we want to get the path to <code>bench</code> on the server because, as discussed previously, executing commands over SSH does not initialize the environment of the server so <code>bench</code> will not be detected if it is installed inside a Python virtual environment.</p><p>We can do this by creating a new step that executes a bash script that outputs the path to <code>bench</code> and assigns it to the <code>bench-path</code> variable. In this script, if <code>which bench</code> returns nothing, then that means <code>bench</code> must be inside <code>/home/ubuntu/.pyenv/shims/</code>.</p><pre><code class=language-yaml>    - name: Get path to bench
+      id: get-bench-path
+      shell: bash
+      run: |
+        echo &quot;bench-path=$(
+        ssh ${{ inputs.server_name }} bash &lt;&lt;'EOF'
+        if [ &quot;$(which bench)&quot; ];
+        then echo &quot;$(which bench)&quot;;
+        else echo &quot;/home/ubuntu/.pyenv/shims/bench&quot;;
+        fi
+        EOF
+        )
+        &quot; &gt;&gt; $GITHUB_OUTPUT
+</code></pre><p>Take note of the syntax used to execute the script. We are using the <code>&lt;&lt;</code> operator to pass the script as input to the <code>bash</code> command. This is called a <a href=https://www.howtogeek.com/719058/how-to-use-here-documents-in-bash-on-linux/>here document</a>. The <code>'EOF'</code> is used to mark the end of the document. It is also important that the last <code>EOF</code>, <code>)</code> and <code>"</code> are on different lines to mark the end of each section of the command. If you put them on the same line, the command will not work.</p><p>The output of the script is then passed to <a href=https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter><code>$GITHUB_OUTPUT</code></a>, which is a default environment variable in GitHub Actions that stores the output data generated by a step in the workflow. It allows us to pass information, such as file paths or computed values, from one part of our workflow to another.</p><p>Then, we want to check if automatic updates are enabled on the server. We can do this by creating another step that executes a bash script. The script will check the value of <code>auto_updates_enabled</code> in the site config of the server and returns it as an output.</p><pre><code class=language-yaml>    - name: Check auto updates config
+      id: check-auto-updates
+      shell: bash
+      run: echo &quot;auto-updates-enabled=$(ssh ${{ inputs.server_name }} 'cd frappe-bench &amp;&amp; echo $(${{ env.BENCH_PATH }} get-site-config auto_updates_enabled)')&quot; &gt;&gt; $GITHUB_OUTPUT
+      env:
+        BENCH_PATH: ${{ steps.get-bench-path.outputs.bench-path }}
+</code></pre><p>(I am not going to discuss the <code>auto_updates_enabled</code> config here in detail. But just know that there is now a new checkbox in the System Settings doctype that allows System Managers to enable or disable automatic updates for a site. It modifies the <code>auto_updates_enabled</code> config in <code>site_config.json</code>. There is also a new <code>bench</code> command called <code>get-site-config</code> that gets a specific value from the site config.)</p><p>The final code should look like this:</p><pre><code class=language-yaml>name: &quot;Check Auto Updates&quot;
+description: &quot;Check if automatic updates are enabled on the server&quot;
+
+inputs:
+  server_name:
+    description: &quot;Name of the server to deploy to (e.g. bizkit_dev)&quot;
+    required: true
+  server_ip:
+    description: &quot;IP address of the server to deploy to&quot;
+    required: true
+  ssh_user:
+    description: &quot;SSH username for the server&quot;
+    required: true
+  ssh_key:
+    description: &quot;SSH key for the server&quot;
+    required: true
+
+outputs:
+  auto-update:
+    description: &quot;Whether or not to update the server&quot;
+    value: ${{ steps.check-auto-updates.outputs.auto-updates-enabled }}
+  bench-path:
+    description: &quot;Path to bench&quot;
+    value: ${{ steps.get-bench-path.outputs.bench-path }}
+
+runs:
+  using: &quot;composite&quot;
+  steps:
+    - name: Configure SSH
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh/
+        echo &quot;$SSH_KEY&quot; &gt; ~/.ssh/${{ inputs.server_name }}.key
+        chmod 600 ~/.ssh/${{ inputs.server_name }}.key
+        cat &gt;&gt;~/.ssh/config &lt;&lt;END
+        Host ${{ inputs.server_name }}
+          HostName ${{ inputs.server_ip }}
+          User $SSH_USER
+          IdentityFile ~/.ssh/${{ inputs.server_name }}.key
+          StrictHostKeyChecking no
+        END
+      env:
+        SSH_USER: ${{ inputs.ssh_user }}
+        SSH_KEY: ${{ inputs.ssh_key }}
+
+    - name: Get path to bench
+      id: get-bench-path
+      shell: bash
+      run: |
+        echo &quot;bench-path=$(
+        ssh ${{ inputs.server_name }} bash &lt;&lt;'EOF'
+        if [ &quot;$(which bench)&quot; ];
+        then echo &quot;$(which bench)&quot;;
+        else echo &quot;/home/ubuntu/.pyenv/shims/bench&quot;;
+        fi
+        EOF
+        )
+        &quot; &gt;&gt; $GITHUB_OUTPUT
+
+    - name: Check auto updates config
+      id: check-auto-updates
+      shell: bash
+      run: echo &quot;auto-updates-enabled=$(ssh ${{ inputs.server_name }} 'cd frappe-bench &amp;&amp; echo $(${{ env.BENCH_PATH }} get-site-config auto_updates_enabled)')&quot; &gt;&gt; $GITHUB_OUTPUT
+      env:
+        BENCH_PATH: ${{ steps.get-bench-path.outputs.bench-path }}
+</code></pre><p>The <code>auto-updates-enabled</code> output is the final output of this action. It will be used by our main workflow to determine whether to skip the server or not.</p><p>Finally, our main workflow should now look like this:</p><pre><code class=language-yaml>name: Deploy-to-Dev
+run-name: Deploy to development servers by @${{ github.actor }}
+
+on:
+  push:
+    branches:
+      - test
+
+env:
+  APP: bizkit_core
+  APP_PATH: frappe-bench/apps/bizkit_core
+  V13_BRANCH: test
+  REPO_URL: git@github.com:${{ github.repository }}.git
+  TOKEN: ${{ secrets.GIT_TOKEN }}
+  SSH_USER: ${{ secrets.EC2_USERNAME }}
+  SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+
+jobs:
+  deploy:
+    name: Deploy to Dev
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        server_name: [FORK_DEV, GIORMI_DEV, LUXEN_DEV, NORI_DEV, TTC_DEV, RAMESH_DEV, LANCE_DEV]
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get composite action repo
+        uses: actions/checkout@v2
+        with:
+          repository: BizKit-Tech/bizkit_composite_actions
+          path: .github/bizkit_actions
+          token: ${{ env.TOKEN }}
+      
+      - name: Check if server is skipped
+        id: check-auto-updates
+        uses: ./.github/bizkit_actions/actions/check-auto-updates
+        with:
+          server_name: ${{ matrix.server_name }}
+          server_ip: ${{ secrets[matrix.server_name] }}
+          ssh_user: ${{ env.SSH_USER }}
+          ssh_key: ${{ env.SSH_KEY }}
+      
+      - name: Deploy to server
+        if: steps.check-auto-updates.outputs.auto-update == 1
+        uses: ./.github/bizkit_actions/actions/deploy-to-ec2
+        with:
+          app_name: ${{ env.APP }}
+          app_path: ${{ env.APP_PATH }}
+          branch_name: ${{ env.V13_BRANCH }}
+          server_name: ${{ matrix.server_name }}
+          server_ip: ${{ secrets[matrix.server_name] }}
+          ssh_user: ${{ env.SSH_USER }}
+          ssh_key: ${{ env.SSH_KEY }}
+</code></pre><p>We have successfully refactored our workflow script! It is now more readable and maintainable. We can now easily add more servers to the matrix without having to duplicate each step and having to manually check if a server should be skipped or not.</p><h2 id=tldr>TL;DR<a href=#tldr class=anchor aria-hidden=true>#</a></h2><p>We used <strong>GitHub Actions</strong> to automate the deployment of our ERPNext code to our development servers. We refactored our workflow script by creating composite actions and using a matrix strategy. The final workflow script can be found in <a href=https://github.com/BizKit-Tech/bizkit_core/blob/test/.github/workflows/deploy-to-dev-servers.yaml>bizkit_core</a>, <a href=https://github.com/BizKit-Tech/erpnext/blob/test/.github/workflows/deploy-to-dev-servers.yaml>erpnext</a>, and <a href=https://github.com/BizKit-Tech/frappe/blob/test/.github/workflows/deploy-to-dev-servers.yaml>frappe</a>. The composite actions can be found in <a href=https://github.com/BizKit-Tech/bizkit_composite_actions>bizkit_composite_actions</a>.</p><p>If we are going to add a new server to the deployment pipeline, these are the steps that we need to follow:</p><ol><li><p>Add the server IP address to the secrets of every repo. Use the naming convention: <code>[SHORT_NAME]_[DEV|PROD]</code> (e.g. <code>EPC_DEV</code>, <code>GBMI_PROD</code>)</p></li><li><p>Add the Amazon EC2 public key for GitHub Actions to the <code>authorized_keys</code> file of the server. This will be used for SSH access to the server.</p></li><li><p>Obtain the GitHub SSH key files (<code>id_rsa</code> and <code>id_rsa.pub</code>) added to the BizKit devs GitHub account (bizkit-engineer) and copy these to the <code>~/.ssh</code> directory of the server. This will be used for <code>git pull</code> using SSH.</p><p>Make sure the keys are secure by running the following commands inside the directory where the keys are saved.</p><pre><code>chmod 400 id_rsa
+chmod 400 id_rsa.pub
+</code></pre><p>Run a test <code>git</code> command to check if the keys are working properly and to add the server to the list of known hosts. For example:</p><pre><code>git fetch git@github.com:BizKit-Tech/erpnext.git test
+</code></pre></li><li><p>Copy the following bash scripts in the server&rsquo;s root directory. The contents of these scripts can be found <a href=#bench-command-depending-on-file-changed>here</a>.</p><ul><li>bench_migrate.sh</li><li>bench_build.sh</li><li>bench_import_initial_customization.sh</li><li>git_pull.sh</li></ul></li><li><p>Add the server name (as defined in step #3) to the matrix of our main workflow.</p></li></ol><h2 id=references>References<a href=#references class=anchor aria-hidden=true>#</a></h2><p><strong>GitHub Actions Workflow Syntax:</strong></p><ul><li><a href=https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#about-yaml-syntax-for-workflows>GitHub Actions Workflow Syntax</a></li></ul><p><strong>Creating Composite Actions:</strong></p><ul><li><a href=https://docs.github.com/en/actions/creating-actions/creating-a-composite-action>GitHub Docs - Creating a Composite Action</a></li><li><a href=https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions#outputs-for-composite-actions>GitHub Docs - Metadata Syntax for GitHub Actions (Outputs for Composite Actions)</a></li><li><a href=https://docs.github.com/en/actions/using-workflows/workflow-commands-for-github-actions#setting-an-output-parameter>GitHub Docs - Workflow Commands for GitHub Actions (Setting an Output Parameter)</a></li></ul><p><strong>Using a Composite Action from a Private Repository:</strong></p><ul><li><a href=https://stackoverflow.com/questions/69034292/how-do-you-use-a-composite-action-that-exists-in-a-private-repository>Stack Overflow - How do you use a composite action that exists in a private repository?</a></li></ul><p><strong>Accessing Outputs from GitHub Actions Steps:</strong></p><ul><li><a href=https://stackoverflow.com/questions/59191913/how-do-i-get-the-output-of-a-specific-step-in-github-actions>Stack Overflow - How do I get the output of a specific step in GitHub Actions?</a></li><li><a href=https://stackoverflow.com/questions/76225806/get-github-action-output-from-previous-step>Stack Overflow - Get GitHub Action Output from Previous Step</a></li></ul><p><strong>Matrix Strategies in GitHub Actions:</strong></p><ul><li><a href=https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs#about-matrix-strategies>GitHub Docs - About Matrix Strategies</a></li><li><a href=https://adamtheautomator.com/github-actions-matrix/>Adam the Automator - GitHub Actions Matrix</a></li></ul><p><strong>SSH Access and Remote Commands:</strong></p><ul><li><a href=https://stackoverflow.com/questions/216202/why-does-an-ssh-remote-command-get-fewer-environment-variables-then-when-run-man>Stack Overflow - Why does an SSH remote command get fewer environment variables than when run manually?</a></li><li><a href=https://superuser.com/questions/1533956/how-to-execute-complex-command-line-over-ssh>Super User - How to Execute Complex Command Line Over SSH</a></li><li><a href=https://www.howtogeek.com/719058/how-to-use-here-documents-in-bash-on-linux/>How-To Geek - How to Use Here Documents in Bash on Linux</a></li><li><a href=https://stackoverflow.com/a/44979486>Stack Overflow - SSH heredoc: bash prompt</a></li><li><a href=https://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions>GNU Bash Manual - Bash Conditional Expressions</a></li></ul><div class=my-n3></div></main></div></div></div><footer class="footer text-muted"><div class=container><div class=row><div class="col-lg-8 order-last order-lg-first"><ul class=list-inline><li class=list-inline-item>Powered by <a href=https://github.com/>GitHub</a>, <a href=https://gohugo.io/>Hugo</a>, and <a href=https://getdoks.org/>Doks</a></li></ul></div><div class="col-lg-8 order-first order-lg-last text-lg-end"><ul class=list-inline></ul></div></div></div></footer><script src=/js/bootstrap.min.2374eee79bc19379a4404a900e042aef91675978a6686beeb97b3b0fa80af5c349abc1304de36298d942cde796148b853299ff49801257ee2b89e89ac427d75b.js integrity="sha512-I3Tu55vBk3mkQEqQDgQq75FnWXimaGvuuXs7D6gK9cNJq8EwTeNimNlCzeeWFIuFMpn/SYASV+4rieiaxCfXWw==" crossorigin=anonymous defer></script><script src=/js/highlight.min.06bc575474b7870a192cb49dce8845ac4471f5e504357081665555fe252a37837b72cca0f58157a9615ff384d3e439e26f58c94416a4b744c27b3056adfad1aa.js integrity="sha512-BrxXVHS3hwoZLLSdzohFrERx9eUENXCBZlVV/iUqN4N7csyg9YFXqWFf84TT5Dnib1jJRBakt0TCezBWrfrRqg==" crossorigin=anonymous defer></script><script src=/main.min.7ab523108435955765bcb88a0ee704f412ba01646b5478e84f3b9feb24f0ce750a14c3f7bd9a62408fe21e41996d361a9eb29f77e85dfe77b7e17f7623bd3a97.js integrity="sha512-erUjEIQ1lVdlvLiKDucE9BK6AWRrVHjoTzuf6yTwznUKFMP3vZpiQI/iHkGZbTYanrKfd+hd/ne34X92I706lw==" crossorigin=anonymous defer></script><script src=/index.min.4ca4fe8b2184d25a5ac05c42fb173e46cc6d851c7eb805945a5a0e251e10db09d197021fbe2e829dcbd4479066280a5a3b54fd675be03fb3d1637ba389071ca6.js integrity="sha512-TKT+iyGE0lpawFxC+xc+RsxthRx+uAWUWloOJR4Q2wnRlwIfvi6CncvUR5BmKApaO1T9Z1vgP7PRY3ujiQccpg==" crossorigin=anonymous defer></script></body></html>
