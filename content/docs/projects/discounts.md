@@ -1,7 +1,7 @@
 ---
 title: "Discounts"
 description: "Item"
-lead: "Author/s: Celyn Raquel"
+lead: "Author/s: Celyn Raquel, Jed Reyes"
 date: 2023-07-05T14:30:18+08:00
 lastmod: 2023-07-05T14:30:18+08:00
 draft: false
@@ -156,17 +156,26 @@ Currently, item-level and transaction-level discounts are applied to the followi
 
 Item-level discounts are shown in the Items child table. They are itemized inside the Configure Discounts modal triggered by the Configure Discounts button (`configure_discounts`) in the same row or item row form. The discount percentages of the item-level discounts are concatenated inside the Discounts Applied field (`discounts_applied`), and the combined difference between the Price List Rate and the Rate are stored in the Discount Percentage (`discount_percentage`) and Discount Amount (`discount_amount`) fields.
 
-Transaction-level discounts have their own dedicated child table inside transactions. While there are only two options for the Discount Type when maintaining the transaction-level discounts in the master data DocTypes (i.e., On Total, Compounding), within transactions, the user can select another Discount Type for transaction-level discounts: Actual on Total. When the Discount Type selected is either On Total or Compounding, the Discount Percentage is editable while the Discount Amount is disabled. The inverse is true for when the selected Discount Type is Actual on Total.
+Transaction-level discounts have their own dedicated child table inside transactions. While there are only two options for the Discount Type when maintaining the transaction-level discounts in the master data DocTypes (i.e., On Total, Compounding), within transactions, the user can select another Discount Type for transaction-level discounts: Actual on Total.
+
+When the Discount Type selected is either On Total or Compounding, the Discount Percentage is editable while the Discount Amount is disabled. The inverse is true for when the selected Discount Type is Actual on Total.
 
 There are multiple touchpoints on a transaction for discounts:
 
 1. Item Code in the Items table is changed
 
-   Inside the `item_code` form event of `erpnext.TransactionController`, the ``
+   Inside the `item_code` form event of `erpnext.TransactionController`, the `calculate_item_discounts` function of the `erpnext.TransactionController` class is called after the item details are fetched from the server call.
+
+   Within the same `item_code` form event, the `price_list_rate` form event is also triggered.
 
 2. Price List Rate in the Items table is changed
 
-   Inside the `price_list_rate` form event of `erpnext.buying.BuyingController`, if the document is a Purchase Order, Purchase Invoice, or Purchase Receipt, it will call on `display_transaction_discounts` under `erpnext.multiple_discounts`
+   Inside the `price_list_rate` form event of `erpnext.buying.BuyingController`, if the document is one of the following, it will call on `display_transaction_discounts` under `erpnext.multiple_discounts`:
+
+   - Purchase Order
+   - Purchase Invoice
+   - Purchase Receipt
+   - Supplier Quotation
 
    ```js
    price_list_rate: function (doc, cdt, cdn) {
@@ -176,38 +185,84 @@ There are multiple touchpoints on a transaction for discounts:
        }
    ```
 
-   Then under `erpnext.multiple_discounts`, it will call on the `get_transaction_discounts` method from the `discounts_controller` on the backend
+   Then under `erpnext.multiple_discounts`, it will call on the `get_transaction_discounts` method from the `discounts_controller` on the backend:
 
    ```js
-   frappe.call("erpnext.controllers.discounts_controller.get_transaction_discounts",
-       {
-           doc: frm.doc,
-       }
-   )
+   frappe.call(
+     "erpnext.controllers.discounts_controller.get_transaction_discounts",
+     {
+       doc: frm.doc,
+     }
+   );
    ```
 
-   And finally under `get_transaction_discounts`, if finds the respective Pricing Rules that are classified as "Transaction" for Supplier Discounts, and "Principal" for Principal Discounts using an SQL query
+   And finally under `get_transaction_discounts`, it finds the respective Pricing Rules that are classified as "Transaction" for Supplier Discounts, and "Principal" for Principal Discounts using an SQL query:
 
    ```python
    @frappe.whitelist()
    def get_transaction_discounts(doc):
-       # Selects enabled pricing rules that are labelled "Transaction" and "Principal" under the specified Supplier
-       # For principal discounts, adds another query to filter the principals based on the specified Principal
-       # Returns the transaction discounts in a form of a dict
+        ...
+        # Selects enabled pricing rules that are labelled "Transaction" and "Principal" under the specified Supplier
+        # For principal discounts, adds another query to filter the principals based on the specified Principal
+        # Returns the transaction discounts in a form of a dict
    ```
 
 3. Qty is the Items table is changed
 
+   When the item quantity is changed, the `calculate_item_discounts` form event and `erpnext.multiple_discounts.display_transaction_discounts` public function are triggered:
+
+   ```js
+   erpnext.TransactionController = erpnext.taxes_and_totals.extend({
+       qty: function (doc, cdt, cdn) {
+           let item = frappe.get_doc(cdt, cdn);
+           ...
+           frappe.run_serially([
+               () => this.calculate_item_discounts(item),
+               ...
+               () =>
+   				erpnext.multiple_discounts.display_transaction_discounts(
+   					this.frm
+   				),
+           ])
+       }
+   });
+   ```
+
 4. Transaction Discounts are updated
 
-5. Supplier/Principal is changed after Transaction Discounts was updated
+   In each form script file of the transaction DocTypes that discounts are applied, there is a form script for the Buying/Selling Transaction Discounts. This is where the transaction discounts are maintained within each transaction:
+
+   ```js
+   frappe.ui.form.on("Buying Transaction Discounts", {});
+   ```
+
+   Transaction discounts are recalculated when transaction discounts here are updated.
+
+5. Supplier/Principal is changed after updating the Transaction Discounts
 
    It will remove the respective discounts that were previously applied, then would fetch the new set of Transaction Discounts based on the given Supplier/Principal using `display_transaction_discounts`
 
    ```js
-   () => erpnext.multiple_discounts.remove_other_principal_transaction_discounts(this.frm),
-   () => erpnext.multiple_discounts.remove_other_supplier_transaction_discounts(this.frm),
-   () => erpnext.multiple_discounts.display_transaction_discounts(this.frm)
+   erpnext.buying.BuyingController = erpnext.TransactionController.extend({
+     principal: async () => {
+        frappe.run_serially([
+            () =>
+                erpnext.multiple_discounts.remove_other_principal_transaction_discounts(
+                    this.frm
+                ),
+            () =>
+                erpnext.multiple_discounts.remove_other_supplier_transaction_discounts(
+                    this.frm
+            ),
+            () =>
+                erpnext.multiple_discounts.display_transaction_discounts(this.frm);
+        ]);
+     },
+
+     supplier: async () => {
+        // similar to principal implementation
+     }
+   });
    ```
 
 # 4 Recommendations
