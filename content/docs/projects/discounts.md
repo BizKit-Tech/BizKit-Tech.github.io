@@ -23,7 +23,7 @@ Discounts are a crucial feature in purchasing and sales transactions. It enables
 
 Item discounts are discounts applied to the Price List Rate of each item in a transaction. Supplier, Customer, and Principal discounts are discounts applied to the whole transaction, distributed among the items' Rates.
 
-<img src="general_flow.png" alt="General Flow" width="100%">
+<img src="discounts_general_flow.png" alt="General Flow" width="100%">
 
 # 2 Maintenance
 
