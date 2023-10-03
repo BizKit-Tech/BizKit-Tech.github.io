@@ -1,7 +1,7 @@
 ---
 title: "Performance Tuning Methods"
 description: ""
-lead: ""
+lead: "Author/s: Gab Barbudo"
 date: 2023-08-16T19:19:34+08:00
 lastmod: 2023-08-16T19:19:34+08:00
 draft: false
@@ -146,6 +146,29 @@ If the value of the `max_connections` system variable is too low, it can cause a
 
 Ultimately, the best way to determine an appropriate value for `max_connections` is to experiment with different values and monitor the performance of your database to see how it responds.
 
+## Optimizing Images for Web and Performance
+
+*(This section of the documentation is brought to you by one of our prod sites that used to display a logo that is rendered as 50 x 24 px but is 1.6 MB in size.)*
+
+Optimizing images for the web is crucial for enhancing the performance and user experience of our website. Properly optimized images not only load faster but also consume less bandwidth, making our web pages more accessible and responsive for users.
+
+Here are some general guidelines for image sizes when optimizing for the web:
+
+- **Resolution:** Use the appropriate resolution for your images. For most web content, a resolution of 72 pixels per inch (PPI) is sufficient. Higher resolutions are typically reserved for print.
+
+- **File Format:** Use the right file format for the image type:
+    - JPEG (or JPG): Ideal for photographs and images with a wide range of colors.
+    - PNG: Suitable for images with transparency or sharp edges, such as logos and graphics.
+    - SVG: Ideal for logos and icons that need to be scaled to different sizes.
+    - WebP: A modern format that provides excellent compression and quality. Use it for browsers that support it.
+    - GIF: Use it for animated images.
+
+    You can refer to this [article](https://techstacker.com/gif-jpg-gif-svg-webp-which-one-to-use/ZAwv8mukZPYP2waYm/) for more information on image formats.
+
+- **Compression:** Compress your images to reduce file size while maintaining acceptable quality. *I* highly recommended that image file sizes be kept below 1 MB, with 100 KB being the ideal maximum file size for even better performance.
+
+- **Image Dimensions:** Resize images to match the specific dimensions required by your website's layout. Avoid using larger images that need to be scaled down using HTML/CSS, as this wastes bandwidth and may result in distortion.
+
 ## References
 
 1. <https://discuss.erpnext.com/t/maintenance-for-erpnext-performance/50412/15>
@@ -156,3 +179,5 @@ Ultimately, the best way to determine an appropriate value for `max_connections`
 6. <https://serverfault.com/a/281439>
 7. <https://dba.stackexchange.com/questions/27328/how-large-should-be-mysql-innodb-buffer-pool-size>
 8. <https://www.percona.com/blog/80-ram-tune-innodb_buffer_pool_size/>
+9. <https://kinsta.com/blog/optimize-images-for-web/>
+10. <https://blog.adobe.com/en/publish/2022/02/02/how-to-optimize-images-for-your-website>
