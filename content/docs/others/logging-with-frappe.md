@@ -84,7 +84,7 @@ Arguments:
 frappe.logger("schedule").info("Starting backup...")
 frappe.logger("schedule").error("Could not send backup file.")
 ```
-```log
+```
 2023-10-03 11:30:10,861 INFO schedule Starting backup...
 2023-10-03 11:33:04,644 ERROR schedule Could not send backup file.
 ```
