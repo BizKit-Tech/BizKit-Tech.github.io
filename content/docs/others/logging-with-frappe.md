@@ -1,7 +1,7 @@
 ---
 title: "Logging with Frappe"
 description: ""
-lead: ""
+lead: "Author/s: Gab Barbudo"
 date: 2023-10-03T19:38:28+08:00
 lastmod: 2023-10-03T19:38:28+08:00
 draft: false
