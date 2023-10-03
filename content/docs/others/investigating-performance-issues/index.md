@@ -169,6 +169,8 @@ The Network tab in a browser's developer tools allows you to monitor and analyze
 #### Frappe Logs
 Frappe logs can include information about errors and exceptions that have occurred, as well as various types of debugging and diagnostic information.
 
+*See [Logging with Frappe](/docs/others/logging-with-frappe) for details on how to use Frappe's built-in logging system.*
+
 ##### Desk Logs
 Logs that track operational events: usually user activities that happen in the frontend. They can be accessed via the Desk UI.
 - Access Log
