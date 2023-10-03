@@ -3,7 +3,7 @@ title: "Reports Configurations"
 description: ""
 lead: ""
 date: 2023-10-02T11:10:14+08:00
-lastmod: 2023-10-03T18:36:34+08:00
+lastmod: 2023-10-03T19:23:34+08:00
 draft: false
 images: []
 menu: 
@@ -34,7 +34,11 @@ toc: true
 
 ### Changes Made
 #### On Load of the Report Document Form
-![On Load of the Report Document Form](image-4.png)
+![On Load of the Report Document Form 1](image-6.png)
+![On Load of the Report Document Form 2](image-7.png)
+![On Load of the Report Document Form 3](image-8.png)
+![On Load of the Report Document Form 4](image-9.png)
+![On Load of the Report Document Form 5](image-10.png)
 
 #### On Load of the Report View
 ![On Load of the Report View](image-5.png)
