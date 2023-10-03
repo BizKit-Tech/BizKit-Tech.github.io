@@ -52,7 +52,7 @@ toc: true
   
   This step is nearly identical to the `load_filters` step mentioned earlier, with the key difference being that it initially utilizes the filters, specifically their default values, to obtain the columns. Subsequently, it compares the set of columns retrieved from the Python (py) file with the set of columns obtained from the database. Similarly, if the sets are identical, no changes are made. However, if the sets differ, such as when a new column is added to the py file, the new set of columns is loaded into the database.
 
-![On Load of the Report Document Form 5](image-10.png)
+![On Load of the Report Document Form 5](image-4.png)
 
   An attempt is made to execute the function `get_configurable_columns` in the report module's py file. If it succeeds, `has_dynamic_columns` is set to `0`, and `columns` is populated with the list returned by `get_configurable_columns`. If it fails, `has_dynamic_columns` is set to `1`, and `columns` is assigned an empty list.
 
