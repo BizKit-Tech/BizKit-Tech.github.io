@@ -3,7 +3,7 @@ title: "Reports Configurations"
 description: ""
 lead: "Author/s: Rhuver Joshua Pedere"
 date: 2023-10-02T11:10:14+08:00
-lastmod: 2023-10-04T17:22:34+08:00
+lastmod: 2023-10-04T17:28:34+08:00
 draft: false
 images: []
 menu: 
@@ -60,6 +60,13 @@ toc: true
 
 ### How to Use the Feature
 {{< figure src="example.gif" alt="Example" width="100%" >}}
+ 1. Go to Report List.
+ 2. Open a Script Report document Form. 
+ 3. Modify the filters and columns configurations. 
+ 4. Make sure that `Enable Filters and Columns Configuration` is enabled. 
+ 5. Save your modifications. 
+ 6. Access the Report View.
+
 ### Testing
  - [Summary](https://app.clickup.com/t/865cwwyjc?comment=90080051624998)
  - [Test Cases](https://docs.google.com/spreadsheets/d/16IeQIgDSaPtXUXdGaxYxj3xapZK1GgSc/edit#gid=1215479650)
