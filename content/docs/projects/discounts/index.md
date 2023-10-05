@@ -8,14 +8,14 @@ draft: false
 images: []
 menu:
   docs:
-    parent: "standards"
+    parent: "projects"
 weight: 302
 toc: true
 ---
 
 # 1 Overview
 
-Discounts are a crucial feature in purchasing and sales transactions. It enables the users to configure item rates more flexibly according to multiple factors. Discounts are maintained and are associated to the following master data DocTypes:
+Discounts are a crucial feature in purchasing and sales transactions. It enables the users to configure item rates more flexibly according to multiple factors. Discounts are maintained and are associated with the following master data DocTypes:
 
 - Item
 - Supplier
@@ -29,7 +29,7 @@ Item discounts are discounts applied to the Price List Rate of each item in a tr
 
 ## 2.1 Child DocTypes
 
-Discounts are maintained in the master data associated to them as a child table. They are generally separated into two child tables: Buying Discounts and Selling Discounts, depending on which ones are applicable to the DocType.
+Discounts are maintained in the master data associated with them as a child table. They are generally separated into two child tables: Buying Discounts and Selling Discounts, depending on which ones are applicable to the DocType.
 
 The following fields are typically stored in these child DocTypes:
 
@@ -160,6 +160,17 @@ Transaction-level discounts have their own dedicated child table inside transact
 
 When the Discount Type selected is either On Total or Compounding, the Discount Percentage is editable while the Discount Amount is disabled. The inverse is true for when the selected Discount Type is Actual on Total.
 
+The following discounts are item-level discounts and are found in the Items child table within a transaction:
+
+- Item Buying Discounts
+- Item Selling Discounts
+
+The following discounts are transaction-level discounts and are found in the Transaction Discounts child table within a transaction:
+
+- Supplier Buying Discounts
+- Customer Selling Discounts
+- Principal Buying Discounts
+
 There are multiple touchpoints on a transaction for discounts:
 
 1. Item Code in the Items table is changed
@@ -207,7 +218,7 @@ There are multiple touchpoints on a transaction for discounts:
         # Returns the transaction discounts in a form of a dict
    ```
 
-3. Qty is the Items table is changed
+3. Qty in the Items table is changed
 
    When the item quantity is changed, the `calculate_item_discounts` form event and `erpnext.multiple_discounts.display_transaction_discounts` public function are triggered:
 
