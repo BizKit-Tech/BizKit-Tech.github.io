@@ -141,7 +141,7 @@ There are three functions inside the file that are called inside the parent DocT
 
    The Pricing Rules associated with the discounts to be added, updated, and deleted identified in the `setup_pricing_rules` call are added, updated, and deleted through this function.
 
-   This function os called in the `on_update` controller of the parent DocType.
+   This function is called in the `on_update` controller of the parent DocType.
 
 # 3 Application To Transactions
 
