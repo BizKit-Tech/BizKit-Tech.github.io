@@ -165,7 +165,8 @@ Here are some general guidelines for image sizes when optimizing for the web:
 
     You can refer to this [article](https://techstacker.com/gif-jpg-gif-svg-webp-which-one-to-use/ZAwv8mukZPYP2waYm/) for more information on image formats.
 
-- **Compression:** Compress your images to reduce file size while maintaining acceptable quality. *I* highly recommended that image file sizes be kept below 1 MB, with 100 KB being the ideal maximum file size for even better performance.
+- **Compression:** Compress your images to reduce file size while maintaining acceptable quality. *I* highly recommend that image file sizes be kept below 1 MB, with 100 KB being the ideal maximum file size for even better performance.
+
 
 - **Image Dimensions:** Resize images to match the specific dimensions required by your website's layout. Avoid using larger images that need to be scaled down using HTML/CSS, as this wastes bandwidth and may result in distortion.
 
