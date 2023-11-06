@@ -169,6 +169,8 @@ The Network tab in a browser's developer tools allows you to monitor and analyze
 #### Frappe Logs
 Frappe logs can include information about errors and exceptions that have occurred, as well as various types of debugging and diagnostic information.
 
+*See [Logging with Frappe](/docs/others/logging-with-frappe) for details on how to use Frappe's built-in logging system.*
+
 ##### Desk Logs
 Logs that track operational events: usually user activities that happen in the frontend. They can be accessed via the Desk UI.
 - Access Log
@@ -221,3 +223,35 @@ More details can be found in the [Performance Tuning Methods](/docs/others/perfo
 1. Maintain a log of all investigations performed, including the observed symptoms, analysis conducted, and actions taken.
 2. Document any changes made to database configurations, instance settings, or other relevant adjustments.
 3. Record the results of the changes and the impact on performance.
+
+---
+
+## Specific Cases
+
+### Case 1: Storage Full
+
+Run `df -H` to check the storage usage of the EC2 instance. If a filesystem (e.g. `/dev/sda1`) is full:
+
+<ol type="1">
+  <li>Run <code>du -h -x -d1 /</code> to find out which specific directory takes up space.</li>
+  <li>If <code>/tmp</code> is taking up space, check inside if there are large <code>#sql_*****.MAD</code> files.
+    <ol type="a">
+        <li>If there are: there might be a long-running, dead query. To resolve this, follow these steps:
+            <ol type="i">
+                <li>In <code>mysql</code>, run <code>show processlist</code> to identify the query (check the Time column).</li>
+                <li>Once the query is identified, kill the query using <code>kill [query_id]</code>. Check if the <code>.MAD</code> files are deleted.</li>
+                <li>Run <code>sudo service mysqld restart</code> to restart MySQL server.</li>
+            </ol>
+        </li>
+        <li>If there is none: try to explore and identify which files are taking up too much space. Delete them if possible.</li>
+    </ol>
+    <li>Consider running the following commands to clear up MySQL cache in case nothing else works out. This will delete all binary logs and reset the index file. This is safe to do as long as you don't need to restore from a backup.
+  </li>
+</ol>
+
+```bash
+cd /var/lib/mysql
+sudo su
+ls | grep -P "^mysql-bin.[0-9]+$" | xargs -d"\n" rm
+rm /var/log/mysql/mariadb-bin.index
+```
