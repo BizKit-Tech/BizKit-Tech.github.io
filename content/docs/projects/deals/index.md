@@ -55,8 +55,6 @@ Frontend and backend validations are present to validate values upon entering as
 
 ### 2.2.1 Item Deals Validation
 
-For Item Discounts, the validation of Buying and Selling Discounts are separated into two functions/methods:
-
 ```python
 
 
@@ -291,7 +289,7 @@ There is only one touchpoint on a deal application. This is when an
 
 # 5 Recommendations
 
-1. As you can see in [Validations]({{< relref "discounts#22-validations" >}}), there is a `validate_selling_discounts` function that is used by the Item Selling Discounts and Customer Discounts. However, the validations for the Item Buying Discounts and Supplier Discounts are methods of their respective parent DocType classes. One thing we can do to further clean the validations is to put all validations in one function since they're all validating percentages and dates anyway
+1. As you can see in the limitations, there are certain scenarios this feature doesn't handle. This makes it prone to human error and potential business problems. For future development, I recommend implementing a function that runs scripts before changes occur. This function could be named `before_change` and be widely applicable across different document types and functions. This would be highly beneficial for features like this one, where the pre-change value of a field is crucial.
 
 # 6 Developer's Note
 1. This feature is a treasure trove for grid manipulation. Struggling with table grids? Give the related code a peek! It might just hold the solution you've been searching for.
