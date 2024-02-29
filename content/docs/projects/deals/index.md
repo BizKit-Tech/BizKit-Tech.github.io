@@ -243,7 +243,7 @@ One great challenge we faced when developing this feature was handling Item Code
 
 # 5 Recommendations
 
-1. As you can see in [Validations]({{< relref "discounts#22-validations" >}}), there is a `validate_selling_discounts` function that is used by the Item Selling Discounts and Customer Discounts. However, the validations for the Item Buying Discounts and Supplier Discounts are methods of their respective parent DocType classes. One thing we can do to further clean the validations is to put all validations in one function since they're all validating percentages and dates anyway
+As you can see in [Validations]({{< relref "discounts#22-validations" >}}), there is a `validate_selling_discounts` function that is used by the Item Selling Discounts and Customer Discounts. However, the validations for the Item Buying Discounts and Supplier Discounts are methods of their respective parent DocType classes. One thing we can do to further clean the validations is to put all validations in one function since they're all validating percentages and dates anyway
 
 # 6 Developer's Note
-1. This feature is a treasure trove for grid manipulation. Struggling with table grids? Give the related code a peek! It might just hold the solution you've been searching for.
+This feature is a treasure trove for grid manipulation. Struggling with table grids? Give the related code a peek! It might just hold the solution you've been searching for.
