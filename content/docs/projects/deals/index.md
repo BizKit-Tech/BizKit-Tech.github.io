@@ -22,9 +22,9 @@ Item deals are automatically applied based on the quantity of each item within a
 <img src="deals_flow.png" alt="General Flow" width="100%">
 Note: All current deals are set to recursive by default at the moment. 
 
-# 2 Maintenance
+## 2 Maintenance
 
-## 2.1 Child DocTypes
+### 2.1 Child DocTypes
 
 Deals are maintained in the Item profile and are separated by two types of deals. These are the the Selling Deals and the Buying Deals. 
 
@@ -49,11 +49,11 @@ Currently, the following are the child DocTypes for deals:
 - Item Buying Deal
 - Item Selling Deal
 
-## 2.2 Validations
+### 2.2 Validations
 
 Frontend and backend validations are present to validate values upon entering as well as as upon saving. 
 
-### 2.2.1 Item Deals Validation
+#### 2.2.1 Item Deals Validation
 
 For Item Discounts, the validation of Buying and Selling Discounts are separated into two functions/methods:
 
@@ -104,11 +104,11 @@ frappe.ui.form.on("Item Selling Deal", {
 ```
 
 
-## 2.3 Pricing Rule Controller
+### 2.3 Pricing Rule Controller
 
 The pricing rule controller operates similarly to the discount controller. It utilizes the same code, workflow, and processes. For further details on the pricing rule controller, please refer to section 2.3, "Pricing Rule Controller," in the discount documentation: link to documentation: <a href="https://bizkit-tech.github.io/docs/projects/discounts/#23-pricing-rule-controller"> https://bizkit-tech.github.io/docs/projects/discounts/#23-pricing-rule-controller</a>.
 
-# 3 Application To Transactions
+## 3 Application To Transactions
 
 Item deals are applied when you add an item into the items table of a certain transaction. The initial application of a deal is when an Item Code is entered and since the quantity of the item always defaults to one, it then checks for a deal that is applicable to the item. This happens through an API call. 
 
@@ -238,12 +238,12 @@ There are three touchpoint on a deal application. This is when an
    ```
     > This function both serves as free item remover and qty updater. 
 
-# 4 Limitation
+## 4 Limitation
 One great challenge we faced when developing this feature was handling Item Code changes when an existing deal was applied to the original code. To address this, we initially implemented a process that reapplied deals to all items in the Items table whenever an Item Code changed. However, this caused significant performance issues, so we had to revert to a previous approach. Unfortunately, due to limitations in accessing the original Item Code before the change, we cannot automatically adjust the quantity of free items associated with it. As a temporary solution, users will need to manually remove these items.
 
-# 5 Recommendations
+## 5 Recommendations
 
 As you can see in [Validations]({{< relref "discounts#22-validations" >}}), there is a `validate_selling_discounts` function that is used by the Item Selling Discounts and Customer Discounts. However, the validations for the Item Buying Discounts and Supplier Discounts are methods of their respective parent DocType classes. One thing we can do to further clean the validations is to put all validations in one function since they're all validating percentages and dates anyway
 
-# 6 Developer's Note
+## 6 Developer's Note
 This feature is a treasure trove for grid manipulation. Struggling with table grids? Give the related code a peek! It might just hold the solution you've been searching for.
